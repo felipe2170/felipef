@@ -17,7 +17,7 @@ export default function ResearchPage() {
         <h1>Research focus</h1>
         <p className="lead">
           My research interests center on clinically important questions in
-          anesthesiology, perioperative care, critical care, and evidence
+          anesthesiology, perioperative care, critical care, and evidence-based
           synthesis.
         </p>
       </section>
