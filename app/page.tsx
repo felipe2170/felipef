@@ -1,156 +1,80 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import { siteConfig } from "../lib/site";
 
 export const metadata: Metadata = {
-  title: "Felipe de Carvalho Figueiredo",
+  title: "Home",
   description:
-    "Homepage of Felipe de Carvalho Figueiredo, a UFMG medical student focused on anesthesiology, clinical research, and health-tech projects.",
-  alternates: {
-    canonical: "https://felipef.com",
-  },
+    "Felipe de Carvalho Figueiredo is a Brazilian medical student at UFMG, currently in internato, focused on anesthesiology, clinical research, and health-tech.",
+  alternates: { canonical: siteConfig.url },
 };
 
-const personJsonLd = {
+const profileJsonLd = {
   "@context": "https://schema.org",
   "@type": "ProfilePage",
   mainEntity: {
     "@type": "Person",
-    name: "Felipe de Carvalho Figueiredo",
-    alternateName: [
-      "Felipe Figueiredo",
-      "felipe2170",
-      "felipedcfigueiredo",
-      "FelipeF",
-    ],
-    url: "https://felipef.com",
-    jobTitle: "Medical student",
+    name: siteConfig.name,
+    alternateName: ["Felipe Figueiredo", "felipedcfigueiredo", "FelipeF medicine"],
+    description: siteConfig.tagline,
     affiliation: {
       "@type": "CollegeOrUniversity",
-      name: "Universidade Federal de Minas Gerais",
+      name: "Universidade Federal de Minas Gerais (UFMG)",
     },
-    sameAs: [
-      "https://github.com/felipe2170",
-      "https://www.instagram.com/felipedcfigueiredo/",
-      "https://medium.com/@felipedcfigueiredo",
-    ],
     knowsAbout: [
-      "Anesthesiology",
-      "Clinical research",
-      "Evidence synthesis",
-      "Health technology",
-      "Medical education",
+      "anesthesiology",
+      "systematic reviews",
+      "pairwise meta-analysis",
+      "network meta-analysis",
+      "health technology",
     ],
+    nationality: "Brazilian",
+    url: siteConfig.url,
   },
 };
 
 export default function HomePage() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
-      />
-
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(profileJsonLd) }} />
       <section className="hero">
-        <div className="eyebrow">Medicine · Research · Health-Tech</div>
-        <h1>Felipe de Carvalho Figueiredo</h1>
-        <p className="lead">
-          I am a UFMG medical student focused on anesthesiology, clinical
-          research, evidence synthesis, and health-tech projects. My work sits
-          at the intersection of medicine, scientific rigor, and practical
-          software for clinical education and workflow.
-        </p>
-
-        <div className="actions">
-          <a className="button primary" href="/about">
-            Learn more
-          </a>
-          <a className="button" href="/projects">
-            View projects
-          </a>
-          <a className="button" href="/research">
-            Research focus
-          </a>
+        <div>
+          <p className="eyebrow">Official Site · UFMG · Medicine, Research, Health-Tech</p>
+          <h1>Felipe de Carvalho Figueiredo</h1>
+          <p className="lead">{siteConfig.tagline}</p>
+          <div className="actions">
+            <Link href="/research" className="btn primary">Research</Link>
+            <Link href="/projects" className="btn">Projects</Link>
+            <Link href="/contact" className="btn">Contact</Link>
+          </div>
         </div>
+        <aside className="portrait">
+          <div>
+            <strong>Professional portrait placeholder</strong>
+            <p>Replace with: /public/images/felipe-portrait.jpg</p>
+          </div>
+        </aside>
       </section>
 
-      <section className="section">
-        <p className="kicker">Overview</p>
-        <div className="grid">
-          <article className="card">
-            <h3>Clinical focus</h3>
-            <p className="muted">
-              My main medical interests include anesthesiology, perioperative
-              care, airway management, and critical care.
-            </p>
-          </article>
-
-          <article className="card">
-            <h3>Research focus</h3>
-            <p className="muted">
-              I work with systematic reviews, meta-analysis, reproducible
-              methods, and clinically relevant questions in medicine.
-            </p>
-          </article>
-
-          <article className="card">
-            <h3>Technology focus</h3>
-            <p className="muted">
-              I build and prototype tools for medical education, ward workflow,
-              and digital health.
-            </p>
-          </article>
-        </div>
+      <section className="section grid-2">
+        <article className="card">
+          <h2>Current stage</h2>
+          <p className="muted">
+            Final-year medical student (internato) at UFMG, with clinical interests in anesthesiology, airway management, perioperative medicine, and critical patient care.
+          </p>
+        </article>
+        <article className="card">
+          <h2>International direction</h2>
+          <p className="muted">
+            Completed a clinical rotation in France and is interested in long-term clinical and research collaboration across Brazil, the United States, and Europe.
+          </p>
+        </article>
       </section>
 
-      <section className="section">
-        <p className="kicker">Selected public footprint</p>
-        <div className="grid">
-          <article className="card wide">
-            <h3>GitHub</h3>
-            <p className="muted">
-              Public code, project repositories, and technical work.
-            </p>
-            <a href="https://github.com/felipe2170" target="_blank" rel="noreferrer">
-              github.com/felipe2170
-            </a>
-          </article>
-
-          <article className="card wide">
-            <h3>Public profiles</h3>
-            <p className="muted">
-              Other public identity signals currently associated with this site.
-            </p>
-            <ul className="list">
-              <li>
-                <a
-                  href="https://www.instagram.com/felipedcfigueiredo/"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Instagram: @felipedcfigueiredo
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://medium.com/@felipedcfigueiredo"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Medium: @felipedcfigueiredo
-                </a>
-              </li>
-            </ul>
-          </article>
-        </div>
-      </section>
-
-      <section className="section">
-        <p className="kicker">Keywords</p>
-        <p className="muted">
-          Felipe de Carvalho Figueiredo, Felipe Figueiredo, UFMG, medical
-          student, anesthesiology, clinical research, meta-analysis, health-tech,
-          Clinia, Internato Suite.
-        </p>
+      <section className="section grid-3">
+        <article className="card"><h3>Research seriousness</h3><p className="muted">Strong focus on evidence synthesis methods and clinically relevant research questions.</p></article>
+        <article className="card"><h3>Medicine + technology</h3><p className="muted">Builds product-oriented tools that support learning, workflow, and decision quality in clinical settings.</p></article>
+        <article className="card"><h3>Editorial leadership</h3><p className="muted">Assistant Editor, Content & Technology @ NSDQ:AFYA.</p></article>
       </section>
     </>
   );
