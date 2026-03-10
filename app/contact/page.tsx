@@ -29,7 +29,7 @@ export default function ContactPage() {
         <article className="card">
           <h2>LinkedIn</h2>
           <p className="muted">Professional networking and collaboration messages.</p>
-          <a className="btn" href={siteConfig.linkedin} target="_blank" rel="noreferrer">LinkedIn placeholder (replace URL)</a>
+          <a className="btn" href={siteConfig.linkedin} target="_blank" rel="noreferrer">LinkedIn </a>
         </article>
       </section>
     </>

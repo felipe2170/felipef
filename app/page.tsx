@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { siteConfig } from "../lib/site";
-
+import Image from "next/image";
 export const metadata: Metadata = {
   title: "Home",
   description:
@@ -49,11 +49,24 @@ export default function HomePage() {
           </div>
         </div>
         <aside className="portrait">
-          <div>
-            <strong>Professional portrait placeholder</strong>
-            <p>Replace with: /public/images/felipe-portrait.jpg</p>
-          </div>
-        </aside>
+  <Image
+    src="/images/felipe-portrait.jpg"
+    alt="Professional portrait of Felipe de Carvalho Figueiredo"
+    width={420}
+    height={520}
+    priority
+    style={{
+      width: "100%",
+      height: "auto",
+      display: "block",
+      borderRadius: "20px",
+      objectFit: "cover",
+      border: "1px solid rgba(255, 255, 255, 0.12)",
+      boxShadow: "0 20px 50px rgba(0, 0, 0, 0.18)",
+      background: "rgba(255,255,255,0.03)",
+    }}
+  />
+</aside>
       </section>
 
       <section className="section grid-2">
@@ -74,7 +87,7 @@ export default function HomePage() {
       <section className="section grid-3">
         <article className="card"><h3>Research seriousness</h3><p className="muted">Strong focus on evidence synthesis methods and clinically relevant research questions.</p></article>
         <article className="card"><h3>Medicine + technology</h3><p className="muted">Builds product-oriented tools that support learning, workflow, and decision quality in clinical settings.</p></article>
-        <article className="card"><h3>Editorial leadership</h3><p className="muted">Assistant Editor, Content & Technology @ NSDQ:AFYA.</p></article>
+        <article className="card"><h3>Editorial leadership</h3><p className="muted">Assistant Editor, Content & Technology @ NASDAQ:AFYA.</p></article>
       </section>
     </>
   );
