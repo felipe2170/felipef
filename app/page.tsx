@@ -15,13 +15,15 @@ const profileJsonLd = {
   mainEntity: {
     "@type": "Person",
     name: siteConfig.name,
-    alternateName: ["Felipe Figueiredo", "felipedcfigueiredo", "FelipeF medicine"],
+    alternateName: ["Felipe Figueiredo", "felipedcfigueiredo", "Dr. Felipe Figueiredo"],
     description: siteConfig.tagline,
     affiliation: {
       "@type": "CollegeOrUniversity",
       name: "Universidade Federal de Minas Gerais (UFMG)",
     },
     knowsAbout: [
+      "Medicine",
+      "Medicina",
       "anesthesiology",
       "systematic reviews",
       "pairwise meta-analysis",
@@ -85,7 +87,7 @@ export default function HomePage() {
       </section>
 
       <section className="section grid-3">
-        <article className="card"><h3>Research seriousness</h3><p className="muted">Strong focus on evidence synthesis methods and clinically relevant research questions.</p></article>
+        <article className="card"><h3>Research</h3><p className="muted">Strong focus on evidence synthesis methods and clinically relevant research questions.</p></article>
         <article className="card"><h3>Medicine + technology</h3><p className="muted">Builds product-oriented tools that support learning, workflow, and decision quality in clinical settings.</p></article>
         <article className="card"><h3>Editorial leadership</h3><p className="muted">Assistant Editor, Content & Technology @ NASDAQ:AFYA.</p></article>
       </section>

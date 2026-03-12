@@ -17,8 +17,16 @@ export const metadata: Metadata = {
     "Felipe de Carvalho Figueiredo",
     "Felipe Figueiredo UFMG",
     "Felipe de Carvalho Figueiredo Médico",
+    "Felipe Figueiredo Médico",
+    "Dr Felipe Figueiredo",
+    "Felipe Figueiredo Doutor",
     "Felipe Figueiredo anesthesiology",
     "felipedcfigueiredo",
+    "Felipe Figueiredo medicina",
+    "Felipe Figueiredo saúde",
+    "Felipe Figueiredo health-tech",
+    "Felipe Figueiredo ECFMG",
+    "Felipe Figueiredo consultas",
     "médico UFMG",
     "pesquisa médica",
   ],
@@ -75,7 +83,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
           <main className="container">{children}</main>
           <footer className="footer">
             <div className="container">
-              © {new Date().getFullYear()} Felipe de Carvalho Figueiredo · UFMG · Pursuing the ECFMG pathway.
+              © {new Date().getFullYear()} Felipe de Carvalho Figueiredo · UFMG · Pursuing ECFMG Certification.
             </div>
           </footer>
         </div>
