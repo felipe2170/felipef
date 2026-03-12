@@ -27,6 +27,7 @@ export const metadata: Metadata = {
     "Felipe Figueiredo health-tech",
     "Felipe Figueiredo ECFMG",
     "Felipe Figueiredo consultas",
+    "Felipe Figueiredo",
     "médico UFMG",
     "pesquisa médica",
   ],
