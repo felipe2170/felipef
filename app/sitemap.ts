@@ -1,23 +1,22 @@
 import type { MetadataRoute } from "next";
-import { allRoutes, siteConfig } from "../lib/site";
-import { getAllPosts } from "../lib/posts";
+import { getAllNotes } from "../lib/notes";
+import { publicRoutes, siteProfile } from "../lib/site";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const now = new Date();
-  const staticRoutes = allRoutes.map((route, index) => ({
-    url: `${siteConfig.url}${route}`,
-    lastModified: now,
-    changeFrequency: route === "" ? "weekly" : "monthly",
-    priority: index === 0 ? 1 : 0.8,
-  })) as MetadataRoute.Sitemap;
-
-  const posts = await getAllPosts();
-  const postRoutes: MetadataRoute.Sitemap = posts.map((post) => ({
-    url: `${siteConfig.url}/blog/${post.slug}`,
-    lastModified: post.date,
-    changeFrequency: "monthly",
-    priority: 0.7,
+  const staticRoutes: MetadataRoute.Sitemap = publicRoutes.map((route, index) => ({
+    url: `${siteProfile.url}${route}`,
+    lastModified: siteProfile.updatedAt,
+    changeFrequency: route === "" ? "monthly" : "yearly",
+    priority: index === 0 ? 1 : route === "/pt-br" ? 0.7 : 0.8,
   }));
 
-  return [...staticRoutes, ...postRoutes];
+  const notes = await getAllNotes();
+  const noteRoutes: MetadataRoute.Sitemap = notes.map((note) => ({
+    url: `${siteProfile.url}/notes/${note.slug}`,
+    lastModified: note.date,
+    changeFrequency: "yearly",
+    priority: 0.6,
+  }));
+
+  return [...staticRoutes, ...noteRoutes];
 }
