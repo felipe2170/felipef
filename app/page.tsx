@@ -1,95 +1,208 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { siteConfig } from "../lib/site";
 import Image from "next/image";
-export const metadata: Metadata = {
-  title: "Home",
-  description:
-    "Felipe de Carvalho Figueiredo is a Brazilian medical student at UFMG, currently in internato, focused on anesthesiology, clinical research, and health-tech.",
-  alternates: { canonical: siteConfig.url },
-};
+import Link from "next/link";
+import { JsonLd } from "../components/json-ld";
+import { SectionHeading } from "../components/section-heading";
+import { pageMetadata } from "../lib/seo";
+import {
+  experiences,
+  projects,
+  researchInterests,
+  siteProfile,
+} from "../lib/site";
 
-const profileJsonLd = {
+export const metadata: Metadata = pageMetadata({
+  title: `${siteProfile.name} — Medical Student at UFMG`,
+  description: siteProfile.description,
+  path: "",
+});
+
+const personJsonLd = {
   "@context": "https://schema.org",
   "@type": "ProfilePage",
+  name: `${siteProfile.name} — Academic profile`,
+  url: siteProfile.url,
+  dateModified: siteProfile.updatedAt,
+  inLanguage: "en",
   mainEntity: {
     "@type": "Person",
-    name: siteConfig.name,
-    alternateName: ["Felipe Figueiredo", "felipedcfigueiredo", "Dr. Felipe Figueiredo"],
-    description: siteConfig.tagline,
-    affiliation: {
-      "@type": "CollegeOrUniversity",
-      name: "Universidade Federal de Minas Gerais (UFMG)",
+    name: siteProfile.name,
+    url: siteProfile.url,
+    image: `${siteProfile.url}/images/felipe-portrait.jpg`,
+    description: siteProfile.description,
+    nationality: {
+      "@type": "Country",
+      name: "Brazil",
     },
+    affiliation: {
+      "@type": siteProfile.affiliation.type,
+      name: siteProfile.affiliation.name,
+      alternateName: siteProfile.affiliation.shortName,
+    },
+    sameAs: [siteProfile.links.linkedin],
     knowsAbout: [
       "Medicine",
-      "Medicina",
-      "anesthesiology",
-      "systematic reviews",
-      "pairwise meta-analysis",
-      "network meta-analysis",
-      "health technology",
+      "Anesthesiology",
+      "Systematic reviews",
+      "Pairwise meta-analysis",
+      "Network meta-analysis",
+      "Health technology",
     ],
-    nationality: "Brazilian",
-    url: siteConfig.url,
   },
 };
 
 export default function HomePage() {
+  const publishedExperiences = experiences.filter((item) => item.status === "published");
+  const publishedInterests = researchInterests.filter((item) => item.status === "published");
+  const publishedProjects = projects.filter((item) => item.status === "published");
+
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(profileJsonLd) }} />
-      <section className="hero">
-        <div>
-          <p className="eyebrow">Official Site · UFMG · Medicine, Research, Health-Tech</p>
-          <h1>Felipe de Carvalho Figueiredo</h1>
-          <p className="lead">{siteConfig.tagline}</p>
-          <div className="actions">
-            <Link href="/research" className="btn primary">Research</Link>
-            <Link href="/projects" className="btn">Projects</Link>
-            <Link href="/contact" className="btn">Contact</Link>
+      <JsonLd data={personJsonLd} />
+
+      <section className="hero page-frame" aria-labelledby="profile-title">
+        <div className="hero__identity">
+          <p className="kicker">Academic profile · {siteProfile.location}</p>
+          <h1 id="profile-title">{siteProfile.name}</h1>
+          <p className="hero__statement">{siteProfile.headline}</p>
+          <div className="hero__links" aria-label="Profile links">
+            <Link className="text-link" href="/research">
+              Research profile <span aria-hidden="true">↗</span>
+            </Link>
+            <Link className="text-link" href="/contact">
+              Start a conversation <span aria-hidden="true">↗</span>
+            </Link>
           </div>
         </div>
-        <aside className="portrait">
-  <Image
-    src="/images/felipe-portrait.jpg"
-    alt="Professional portrait of Felipe de Carvalho Figueiredo"
-    width={420}
-    height={520}
-    priority
-    style={{
-      width: "100%",
-      height: "auto",
-      display: "block",
-      borderRadius: "20px",
-      objectFit: "cover",
-      border: "1px solid rgba(255, 255, 255, 0.12)",
-      boxShadow: "0 20px 50px rgba(0, 0, 0, 0.18)",
-      background: "rgba(255,255,255,0.03)",
-    }}
-  />
-</aside>
+
+        <figure className="hero__portrait">
+          <div className="portrait-crop">
+            <Image
+              src="/images/felipe-portrait.jpg"
+              alt="Felipe de Carvalho Figueiredo in a white coat"
+              fill
+              priority
+              sizes="(max-width: 760px) 100vw, 38vw"
+            />
+          </div>
+          <figcaption>
+            <span>{siteProfile.academicStatus}</span>
+            <span>{siteProfile.affiliation.shortName}</span>
+          </figcaption>
+        </figure>
+
+        <aside className="hero__folio" aria-label="Profile summary">
+          <p>Focus</p>
+          <ul>
+            <li>Anesthesiology</li>
+            <li>Evidence synthesis</li>
+            <li>Health technology</li>
+          </ul>
+        </aside>
       </section>
 
-      <section className="section grid-2">
-        <article className="card">
-          <h2>Current stage</h2>
-          <p className="muted">
-            Final-year medical student (internato) at UFMG, with clinical interests in anesthesiology, airway management, perioperative medicine, and critical patient care.
+      <section id="profile" className="editorial-section page-frame">
+        <SectionHeading
+          number="01"
+          title="A clinical education shaped by questions."
+          note="Profile"
+        />
+        <div className="editorial-section__content profile-copy">
+          <p className="drop-cap">
+            Felipe is a final-year medical student at the Universidade Federal de
+            Minas Gerais. His work sits where attentive clinical training meets
+            evidence synthesis and the design of useful systems.
           </p>
-        </article>
-        <article className="card">
-          <h2>International direction</h2>
-          <p className="muted">
-            Completed a clinical rotation in France and is interested in long-term clinical and research collaboration across Brazil, the United States, and Europe.
+          <p>
+            His principal clinical interest is anesthesiology, with related questions
+            in pain, airway management, perioperative medicine, and critical care. A
+            completed clinical rotation in France added an international perspective
+            to that training.
           </p>
-        </article>
+          <p>
+            He is pursuing the ECFMG pathway and is interested in rigorous research,
+            mentorship, and long-term clinical-research connections in Brazil, the
+            United States, and Europe.
+          </p>
+        </div>
+        <aside className="margin-note">
+          <span className="margin-note__rule" aria-hidden="true" />
+          <p>
+            The aim is simple: ask clinically useful questions, choose methods that
+            fit them, and communicate the result with precision.
+          </p>
+        </aside>
       </section>
 
-      <section className="section grid-3">
-        <article className="card"><h3>Research</h3><p className="muted">Strong focus on evidence synthesis methods and clinically relevant research questions.</p></article>
-        <article className="card"><h3>Medicine + technology</h3><p className="muted">Builds product-oriented tools that support learning, workflow, and decision quality in clinical settings.</p></article>
-        <article className="card"><h3>Editorial leadership</h3><p className="muted">Assistant Editor, Content & Technology @ NASDAQ:AFYA.</p></article>
+      <section className="editorial-section page-frame">
+        <SectionHeading
+          number="02"
+          title="Areas of inquiry"
+          note="Current interests"
+        />
+        <ol className="interest-index editorial-section__wide">
+          {publishedInterests.map((interest, index) => (
+            <li key={interest.name}>
+              <span className="interest-index__number">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <h3>{interest.name}</h3>
+              <p>{interest.description}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section className="editorial-section page-frame">
+        <SectionHeading number="03" title="Trajectory" note="Clinical formation" />
+        <div className="timeline editorial-section__wide">
+          {publishedExperiences.map((experience) => (
+            <article className="timeline__item" key={experience.title}>
+              <p className="timeline__period">{experience.period}</p>
+              <div>
+                <h3>{experience.title}</h3>
+                <p className="timeline__institution">
+                  {experience.institution} · {experience.place}
+                </p>
+              </div>
+              <p>{experience.description}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="editorial-section page-frame">
+        <SectionHeading
+          number="04"
+          title="Two working concepts"
+          note="Selected projects"
+        />
+        <div className="project-preview-grid editorial-section__wide">
+          {publishedProjects.map((project, index) => (
+            <article className="project-preview" key={project.slug}>
+              <div className={`project-preview__figure project-preview__figure--${index + 1}`} aria-hidden="true">
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <div />
+              </div>
+              <p className="project-meta">{project.stage} · Health technology</p>
+              <h3>{project.title}</h3>
+              <p>{project.summary}</p>
+              <Link className="text-link" href={`/projects#${project.slug}`}>
+                Read the case note <span aria-hidden="true">↗</span>
+              </Link>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="closing-statement page-frame">
+        <p className="kicker">Research collaboration</p>
+        <h2>
+          Useful work begins with a well-framed question and a reliable collaborator.
+        </h2>
+        <Link className="text-link text-link--large" href="/contact">
+          Contact Felipe <span aria-hidden="true">↗</span>
+        </Link>
       </section>
     </>
   );
