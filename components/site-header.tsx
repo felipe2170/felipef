@@ -6,10 +6,11 @@ import { useEffect, useState } from "react";
 import { ThemeToggle } from "./theme-toggle";
 
 const navigation = [
-  { href: "/", label: "Profile" },
+  { href: "/about", label: "About" },
   { href: "/research", label: "Research" },
   { href: "/projects", label: "Projects" },
-  { href: "/notes", label: "Notes" },
+  { href: "/cv", label: "CV" },
+  { href: "/blog", label: "Blog" },
   { href: "/contact", label: "Contact" },
 ] as const;
 
@@ -18,6 +19,16 @@ export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => setMenuOpen(false), [pathname]);
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [menuOpen]);
 
   return (
     <header className="site-header">
@@ -49,9 +60,7 @@ export function SiteHeader() {
           <div className="primary-nav__links">
             {navigation.map((item) => {
               const active =
-                item.href === "/"
-                  ? pathname === "/"
-                  : pathname === item.href || pathname.startsWith(`${item.href}/`);
+                pathname === item.href || pathname.startsWith(`${item.href}/`);
               return (
                 <Link
                   key={item.href}

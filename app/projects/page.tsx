@@ -6,7 +6,7 @@ import { projects } from "../../lib/site";
 export const metadata: Metadata = pageMetadata({
   title: "Projects",
   description:
-    "Selected concept-stage projects by Felipe de Carvalho Figueiredo at the intersection of medical education, evidence, and product design.",
+    "Selected health-technology projects by Felipe de Carvalho Figueiredo, including Clinia and an educational Bayesian triage concept.",
   path: "/projects",
 });
 
@@ -21,8 +21,9 @@ export default function ProjectsPage() {
         <p className="kicker">Selected projects</p>
         <h1>Clinical context, translated into restrained product ideas.</h1>
         <p className="page-intro__dek">
-          These studies explore how software might reduce friction or make reasoning
-          more explicit. Both remain concept-stage work, presented with their limits.
+          These projects explore how software can reduce workflow friction or make
+          clinical reasoning more explicit. Each is presented with its current stage
+          and limits.
         </p>
       </header>
 
@@ -63,6 +64,23 @@ export default function ProjectsPage() {
                 <p className="case-study__label">03 / Role</p>
                 <p>{project.role}</p>
               </section>
+              {project.highlight || project.registration ? (
+                <section>
+                  <p className="case-study__label">04 / Current signal</p>
+                  {project.highlight ? <p>{project.highlight}</p> : null}
+                  {project.registration ? <p>{project.registration}.</p> : null}
+                  {project.url ? (
+                    <a
+                      className="text-link"
+                      href={project.url}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      View the open-source project <span aria-hidden="true">↗</span>
+                    </a>
+                  ) : null}
+                </section>
+              ) : null}
               <aside>
                 <p className="case-study__label">Scope note</p>
                 <p>{project.limitation}</p>

@@ -49,8 +49,9 @@ export default function PortuguesePage() {
         <p className="kicker">Perfil em português</p>
         <h1>Felipe de Carvalho Figueiredo</h1>
         <p className="page-intro__dek">
-          Estudante de medicina da UFMG em fase final do internato, com interesses em
-          anestesiologia, síntese de evidências e tecnologia aplicada à saúde.
+          Estudante de medicina da UFMG em fase final do internato, com formatura
+          prevista para dezembro de 2026 e atuação em anestesiologia, síntese de
+          evidências e tecnologia aplicada à saúde.
         </p>
       </header>
 
@@ -63,9 +64,15 @@ export default function PortuguesePage() {
             manejo de vias aéreas, dor e cuidado ao paciente crítico.
           </p>
           <p>
-            Seus interesses em pesquisa incluem revisões sistemáticas, metanálise
-            pareada e metanálise em rede. Uma rotação clínica realizada na França
-            ampliou sua perspectiva sobre formação e colaboração internacional.
+            Em 2026, concluiu um estágio clínico de 10 semanas no CHU Lille, na
+            França, com atividades em anestesia para pacientes queimados e anestesia
+            cardiotorácica. Seus trabalhos atuais incluem revisões sistemáticas,
+            metanálise pareada, metanálise em rede e revisão de evidências clínicas.
+          </p>
+          <p>
+            Também atua como Assistant Editor e Healthcare Consultant na Afya,
+            contribuindo para conteúdo educacional baseado em evidências e para a
+            revisão de materiais clínicos gerados por inteligência artificial.
           </p>
         </div>
         <aside>
@@ -77,7 +84,7 @@ export default function PortuguesePage() {
             </div>
             <div>
               <dt>Etapa</dt>
-              <dd>Internato</dd>
+              <dd>Internato · conclusão em dez. 2026</dd>
             </div>
             <div>
               <dt>Direção clínica</dt>
@@ -99,11 +106,13 @@ export default function PortuguesePage() {
             <article key={project.slug}>
               <h2>{project.title}</h2>
               <p>
-                {project.slug === "internato-suite"
-                  ? "Conceito de ambiente organizado para apoiar a rotina e o aprendizado durante o internato."
+                {project.slug === "clinia"
+                  ? "Aplicação web de código aberto para organizar anotações clínicas e registros de casos durante o internato."
                   : "Exploração educacional sobre probabilidade, incerteza e raciocínio de triagem."}
               </p>
-              <span>Projeto conceitual</span>
+              <span>
+                {project.stage === "active" ? "Projeto ativo" : "Projeto conceitual"}
+              </span>
             </article>
           ))}
       </section>

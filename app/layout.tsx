@@ -45,6 +45,17 @@ export const metadata: Metadata = {
   creator: siteProfile.name,
   publisher: siteProfile.name,
   category: "Academic profile",
+  keywords: [
+    "Felipe de Carvalho Figueiredo",
+    "Felipe Figueiredo UFMG",
+    "Felipe Figueiredo anesthesiology",
+    "Felipe Figueiredo médico",
+    "felipedcfigueiredo",
+    "systematic review",
+    "meta-analysis",
+    "medical research",
+    "health technology",
+  ],
   referrer: "origin-when-cross-origin",
   formatDetection: {
     address: false,

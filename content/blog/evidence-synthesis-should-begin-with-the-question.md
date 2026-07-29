@@ -1,6 +1,6 @@
 ---
 title: "Evidence synthesis should begin with the question"
-summary: "A short note on why careful question framing matters before searches, models, or polished figures enter an evidence-synthesis project."
+summary: "Why careful question framing matters before searches, statistical models, or polished figures enter an evidence-synthesis project."
 date: "2026-07-25"
 language: "en"
 status: "published"
