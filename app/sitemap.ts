@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { getAllNotes } from "../lib/notes";
+import { getAllBlogPosts } from "../lib/blog";
 import { publicRoutes, siteProfile } from "../lib/site";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -10,13 +10,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: index === 0 ? 1 : route === "/pt-br" ? 0.7 : 0.8,
   }));
 
-  const notes = await getAllNotes();
-  const noteRoutes: MetadataRoute.Sitemap = notes.map((note) => ({
-    url: `${siteProfile.url}/notes/${note.slug}`,
-    lastModified: note.date,
+  const posts = await getAllBlogPosts();
+  const blogRoutes: MetadataRoute.Sitemap = posts.map((post) => ({
+    url: `${siteProfile.url}/blog/${post.slug}`,
+    lastModified: post.date,
     changeFrequency: "yearly",
     priority: 0.6,
   }));
 
-  return [...staticRoutes, ...noteRoutes];
+  return [...staticRoutes, ...blogRoutes];
 }

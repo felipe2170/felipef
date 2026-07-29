@@ -4,7 +4,8 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "Felipe de Carvalho Figueiredo",
     short_name: "Felipe Figueiredo",
-    description: "Academic profile of Felipe de Carvalho Figueiredo.",
+    description:
+      "Academic and research profile of Felipe de Carvalho Figueiredo.",
     start_url: "/",
     display: "standalone",
     background_color: "#f2eee6",

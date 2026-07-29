@@ -12,7 +12,7 @@ import {
 } from "../lib/site";
 
 export const metadata: Metadata = pageMetadata({
-  title: `${siteProfile.name} — Medical Student at UFMG`,
+  title: `${siteProfile.name} — Medical Student, Researcher & Health-Tech Builder`,
   description: siteProfile.description,
   path: "",
 });
@@ -39,7 +39,15 @@ const personJsonLd = {
       name: siteProfile.affiliation.name,
       alternateName: siteProfile.affiliation.shortName,
     },
-    sameAs: [siteProfile.links.linkedin],
+    hasOccupation: {
+      "@type": "Occupation",
+      name: siteProfile.currentRole.title,
+      occupationLocation: {
+        "@type": "Country",
+        name: "Brazil",
+      },
+    },
+    sameAs: [siteProfile.links.linkedin, siteProfile.links.github],
     knowsAbout: [
       "Medicine",
       "Anesthesiology",
@@ -68,6 +76,9 @@ export default function HomePage() {
           <div className="hero__links" aria-label="Profile links">
             <Link className="text-link" href="/research">
               Research profile <span aria-hidden="true">↗</span>
+            </Link>
+            <Link className="text-link" href="/projects">
+              Selected projects <span aria-hidden="true">↗</span>
             </Link>
             <Link className="text-link" href="/contact">
               Start a conversation <span aria-hidden="true">↗</span>
@@ -110,14 +121,20 @@ export default function HomePage() {
         <div className="editorial-section__content profile-copy">
           <p className="drop-cap">
             Felipe is a final-year medical student at the Universidade Federal de
-            Minas Gerais. His work sits where attentive clinical training meets
-            evidence synthesis and the design of useful systems.
+            Minas Gerais, with graduation expected in December 2026. His work sits
+            where attentive clinical training meets evidence synthesis and the
+            design of useful systems.
           </p>
           <p>
             His principal clinical interest is anesthesiology, with related questions
-            in pain, airway management, perioperative medicine, and critical care. A
-            completed clinical rotation in France added an international perspective
-            to that training.
+            in pain, airway management, perioperative medicine, and critical care. In
+            2026, he completed a 10-week clinical clerkship in Burn Anesthesia and
+            Cardiothoracic Anesthesia at CHU Lille in France.
+          </p>
+          <p>
+            Alongside medical training, Felipe works as an Assistant Editor and
+            Healthcare Consultant at Afya, contributing to evidence-based educational
+            content and the quality review of AI-generated clinical materials.
           </p>
           <p>
             He is pursuing the ECFMG pathway and is interested in rigorous research,
@@ -174,7 +191,7 @@ export default function HomePage() {
       <section className="editorial-section page-frame">
         <SectionHeading
           number="04"
-          title="Two working concepts"
+          title="Two product directions"
           note="Selected projects"
         />
         <div className="project-preview-grid editorial-section__wide">
@@ -187,6 +204,9 @@ export default function HomePage() {
               <p className="project-meta">{project.stage} · Health technology</p>
               <h3>{project.title}</h3>
               <p>{project.summary}</p>
+              {project.highlight ? (
+                <p className="project-preview__highlight">{project.highlight}</p>
+              ) : null}
               <Link className="text-link" href={`/projects#${project.slug}`}>
                 Read the case note <span aria-hidden="true">↗</span>
               </Link>

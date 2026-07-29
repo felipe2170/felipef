@@ -12,6 +12,8 @@ export function SiteFooter() {
           </p>
         </div>
         <nav className="site-footer__links" aria-label="Footer navigation">
+          <Link href="/cv">CV</Link>
+          <Link href="/blog">Blog</Link>
           <Link href="/pt-br" lang="pt-BR">
             Em português
           </Link>
