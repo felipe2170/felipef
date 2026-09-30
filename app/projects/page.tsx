@@ -1,3 +1,4 @@
+import { ArrowIcon } from "../../components/arrow-icon";
 import type { Metadata } from "next";
 import { Breadcrumbs } from "../../components/breadcrumbs";
 import { pageMetadata } from "../../lib/seo";
@@ -6,12 +7,14 @@ import { projects } from "../../lib/site";
 export const metadata: Metadata = pageMetadata({
   title: "Projects",
   description:
-    "Selected health-technology projects by Felipe de Carvalho Figueiredo, including Clinia and an educational Bayesian triage concept.",
+    "Selected health-technology projects by Felipe de Carvalho Figueiredo, including Clinia, an open-source tool for medical internship workflows.",
   path: "/projects",
 });
 
 export default function ProjectsPage() {
-  const publishedProjects = projects.filter((project) => project.status === "published");
+  const publishedProjects = projects.filter(
+    (project) => project.status === "published",
+  );
 
   return (
     <div className="page-frame inner-page">
@@ -19,11 +22,11 @@ export default function ProjectsPage() {
 
       <header className="page-intro">
         <p className="kicker">Selected projects</p>
-        <h1>Clinical context, translated into restrained product ideas.</h1>
+        <h1>Software shaped by the work of learning.</h1>
         <p className="page-intro__dek">
-          These projects explore how software can reduce workflow friction or make
-          clinical reasoning more explicit. Each is presented with its current stage
-          and limits.
+          Clinia explores a practical question: how can students keep clinical
+          notes and case logs organized throughout their medical internship
+          rotations?
         </p>
       </header>
 
@@ -31,7 +34,9 @@ export default function ProjectsPage() {
         {publishedProjects.map((project, index) => (
           <article className="case-study" id={project.slug} key={project.slug}>
             <header className="case-study__header">
-              <p className="case-study__number">{String(index + 1).padStart(2, "0")}</p>
+              <p className="case-study__number">
+                {String(index + 1).padStart(2, "0")}
+              </p>
               <div>
                 <p className="project-meta">{project.stage} · Case note</p>
                 <h2>{project.title}</h2>
@@ -39,7 +44,10 @@ export default function ProjectsPage() {
               </div>
             </header>
 
-            <div className={`concept-figure concept-figure--${index + 1}`} aria-hidden="true">
+            <div
+              className={`concept-figure concept-figure--${index + 1}`}
+              aria-hidden="true"
+            >
               <div className="concept-figure__axis" />
               <span>{project.title}</span>
               <div className="concept-figure__signal">
@@ -66,7 +74,7 @@ export default function ProjectsPage() {
               </section>
               {project.highlight || project.registration ? (
                 <section>
-                  <p className="case-study__label">04 / Current signal</p>
+                  <p className="case-study__label">04 / Use & registration</p>
                   {project.highlight ? <p>{project.highlight}</p> : null}
                   {project.registration ? <p>{project.registration}.</p> : null}
                   {project.url ? (
@@ -76,7 +84,8 @@ export default function ProjectsPage() {
                       target="_blank"
                       rel="noreferrer"
                     >
-                      View the open-source project <span aria-hidden="true">↗</span>
+                      View the open-source project{" "}
+                      <ArrowIcon direction="diagonal" />
                     </a>
                   ) : null}
                 </section>

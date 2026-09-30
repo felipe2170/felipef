@@ -1,187 +1,165 @@
+import { ArrowIcon } from "../../components/arrow-icon";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Breadcrumbs } from "../../components/breadcrumbs";
-import { SectionHeading } from "../../components/section-heading";
+import { ResearchExplorer } from "../../components/research-explorer";
+import { InquiryGraphic } from "../../components/inquiry-graphic";
 import { pageMetadata } from "../../lib/seo";
 import {
+  primaryStudies,
   presentations,
   researchExperience,
-  researchInterests,
   researchOutputs,
+  researchContribution,
+  submittedAbstracts,
 } from "../../lib/site";
 
 export const metadata: Metadata = pageMetadata({
   title: "Research",
   description:
-    "Research experience, manuscripts under review, conference work, and evidence-synthesis methods pursued by Felipe de Carvalho Figueiredo at UFMG.",
+    "Ongoing primary studies, manuscripts, accepted posters, and submitted abstracts by Felipe de Carvalho Figueiredo. Research stages are stated explicitly.",
   path: "/research",
 });
 
-const methods = [
-  {
-    name: "Systematic reviews",
-    description:
-      "Question formulation, reproducible searches, structured appraisal, risk-of-bias assessment, GRADE, and transparent synthesis.",
-  },
-  {
-    name: "Pairwise meta-analysis",
-    description:
-      "Quantitative synthesis for direct comparisons, with attention to heterogeneity, sensitivity analysis, and clinical interpretation.",
-  },
-  {
-    name: "Network meta-analysis",
-    description:
-      "Comparative synthesis across treatment networks when the evidence structure and assumptions make indirect comparison defensible.",
-  },
-];
-
 export default function ResearchPage() {
-  const outputs = researchOutputs.filter((item) => item.status === "published");
-  const conferenceWork = presentations.filter(
-    (item) => item.status === "published",
-  );
-  const experience = researchExperience.filter(
-    (item) => item.status === "published",
-  );
-  const interests = researchInterests.filter(
-    (item) => item.status === "published",
-  );
-
   return (
     <div className="page-frame inner-page">
       <Breadcrumbs items={[{ label: "Research" }]} />
-
-      <header className="page-intro">
-        <p className="kicker">Research</p>
-        <h1>Evidence is most useful when the question comes first.</h1>
+      <header className="page-intro research-intro">
+        <p className="kicker">Research & methods</p>
+        <h1>
+          Clinical questions.
+          <br />
+          <em>Explicit uncertainty.</em>
+        </h1>
         <p className="page-intro__dek">
-          Felipe&apos;s current work spans systematic reviews, pairwise and network
-          meta-analysis, clinical evidence reviews, and earlier laboratory and cohort
-          research at UFMG.
+          My current work brings together evidence synthesis and retrospective
+          clinical-data research in perioperative and critical care.
         </p>
       </header>
-
-      <section className="editorial-section">
-        <SectionHeading
-          number="01"
-          title="Current manuscripts"
-          note="Under review"
-        />
-        <ol className="research-output-list editorial-section__wide">
-          {outputs.map((output, index) => (
-            <li key={output.title}>
-              <div className="research-output-list__meta">
-                <span>{String(index + 1).padStart(2, "0")}</span>
-                <span>{output.stage}</span>
-              </div>
-              <div>
-                <h2>{output.title}</h2>
-                <p className="research-output-list__authors">
-                  {output.authors}. {output.year}.
-                </p>
-                <div className="research-output-list__tags">
-                  {output.methods ? <span>{output.methods}</span> : null}
-                  {output.registration ? <span>{output.registration}</span> : null}
+      <nav className="on-this-page" aria-label="On this page">
+        <span>Explore</span>
+        <a href="#primary-studies">Primary studies ↓</a>
+        <a href="#research-library">Manuscripts & conferences ↓</a>
+        <a href="#research-background">Experience ↓</a>
+      </nav>
+      <section
+        id="primary-studies"
+        className="research-primary"
+        aria-labelledby="primary-title"
+      >
+        <div className="section-title-row">
+          <h2 id="primary-title">
+            Primary research <em>in progress.</em>
+          </h2>
+          <p className="fine-print">Status from the September 2026 CV.</p>
+        </div>
+        <div className="primary-study-grid">
+          {primaryStudies
+            .filter((s) => s.status === "published")
+            .map((s, i) => (
+              <article key={s.title}>
+                <div className="primary-study-art">
+                  <InquiryGraphic variant={i === 0 ? "flow" : "orbit"} />
+                  <span>0{i + 1} / MIMIC-IV</span>
                 </div>
-              </div>
-            </li>
-          ))}
-        </ol>
-      </section>
-
-      <section className="editorial-section">
-        <SectionHeading number="02" title="Methods" note="Evidence synthesis" />
-        <div className="methods-table editorial-section__wide">
-          {methods.map((method, index) => (
-            <article key={method.name}>
-              <p>{String(index + 1).padStart(2, "0")}</p>
-              <h2>{method.name}</h2>
-              <p>{method.description}</p>
-            </article>
-          ))}
+                <div className="primary-study-copy">
+                  <p className="eyebrow">{s.stage}</p>
+                  <h3>{s.shortTitle}</h3>
+                  <p>{s.description}</p>
+                  <details>
+                    <summary>Full study title</summary>
+                    <p>{s.title}</p>
+                  </details>
+                  {s.url && (
+                    <a
+                      href={s.url}
+                      className="text-link"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {s.registration} <ArrowIcon direction="diagonal" />
+                    </a>
+                  )}
+                </div>
+              </article>
+            ))}
         </div>
       </section>
-
-      <section className="editorial-section">
-        <SectionHeading
-          number="03"
-          title="Research experience"
-          note="UFMG"
+      <section
+        id="research-library"
+        className="research-library"
+        aria-labelledby="library-title"
+      >
+        <div className="section-label">
+          <span>02</span>
+          <p>Research library</p>
+        </div>
+        <h2 id="library-title">
+          Work, with its <em>current status.</em>
+        </h2>
+        <p className="library-context">
+          Manuscripts under review are not published articles. Poster acceptance
+          does not imply that a presentation has taken place. Submitted
+          abstracts remain pending a decision.
+        </p>
+        <ResearchExplorer
+          manuscripts={researchOutputs.filter((x) => x.status === "published")}
+          presentations={presentations.filter((x) => x.status === "published")}
+          submissions={submittedAbstracts.filter(
+            (x) => x.status === "published",
+          )}
         />
-        <div className="research-experience editorial-section__wide">
-          {experience.map((item) => (
-            <article key={`${item.institution}-${item.period}`}>
-              <header>
-                <p>{item.period}</p>
-                <div>
-                  <h2>{item.title}</h2>
-                  <p>{item.institution}</p>
-                </div>
-              </header>
-              <p>{item.description}</p>
-              {item.details ? (
+      </section>
+      <section className="methods-note">
+        <p className="eyebrow">Contribution & methods</p>
+        <h2>Accountable at every stage.</h2>
+        <p>{researchContribution}</p>
+      </section>
+      <section
+        id="research-background"
+        className="home-section"
+        aria-labelledby="background-title"
+      >
+        <div className="section-label">
+          <span>03</span>
+          <p>Research experience</p>
+        </div>
+        <h2 id="background-title">
+          From the laboratory <em>to the cohort.</em>
+        </h2>
+        <div className="research-experience">
+          {researchExperience
+            .filter((x) => x.status === "published")
+            .map((item) => (
+              <article key={item.institution}>
+                <header>
+                  <p>{item.period}</p>
+                  <div>
+                    <h3>{item.title}</h3>
+                    <p>{item.institution}</p>
+                  </div>
+                </header>
+                <p>{item.description}</p>
                 <ul>
-                  {item.details.map((detail) => (
-                    <li key={detail}>{detail}</li>
+                  {item.details?.map((d) => (
+                    <li key={d}>{d}</li>
                   ))}
                 </ul>
-              ) : null}
-            </article>
-          ))}
+              </article>
+            ))}
         </div>
       </section>
-
-      <section className="editorial-section">
-        <SectionHeading
-          number="04"
-          title="Abstracts & presentations"
-          note="Selected"
-        />
-        <ol className="presentation-list editorial-section__wide">
-          {conferenceWork.map((item) => (
-            <li key={item.title}>
-              <p className="presentation-list__year">{item.year}</p>
-              <div>
-                <p className="project-meta">{item.format}</p>
-                <h2>{item.title}</h2>
-                <p>
-                  {item.authors}. <em>{item.venue}</em>.
-                </p>
-              </div>
-            </li>
-          ))}
-        </ol>
-      </section>
-
-      <section className="editorial-section">
-        <SectionHeading
-          number="05"
-          title="Clinical questions"
-          note="Areas of interest"
-        />
-        <div className="research-interests editorial-section__wide">
-          {interests.map((interest) => (
-            <article key={interest.name}>
-              <h2>{interest.name}</h2>
-              <p>{interest.description}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="collaboration-note">
-        <p className="kicker">Collaboration fit</p>
-        <div>
-          <h2>Clear scope. Defensible methods. Consistent execution.</h2>
-          <p>
-            Felipe welcomes conversations about evidence-synthesis projects and
-            clinically grounded research in anesthesiology, perioperative medicine,
-            critical care, and adjacent fields.
-          </p>
-          <Link className="text-link text-link--large" href="/contact">
-            Discuss a research question <span aria-hidden="true">↗</span>
-          </Link>
-        </div>
+      <section className="invitation">
+        <p className="eyebrow">Research collaboration</p>
+        <h2>
+          What question
+          <br />
+          <em>are you working on?</em>
+        </h2>
+        <Link href="/contact" className="button-link">
+          Start a conversation <ArrowIcon direction="diagonal" />
+        </Link>
       </section>
     </div>
   );

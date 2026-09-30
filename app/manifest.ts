@@ -8,8 +8,8 @@ export default function manifest(): MetadataRoute.Manifest {
       "Academic and research profile of Felipe de Carvalho Figueiredo.",
     start_url: "/",
     display: "standalone",
-    background_color: "#f2eee6",
-    theme_color: "#823d32",
+    background_color: "#f6f5ef",
+    theme_color: "#315f4d",
     icons: [
       {
         src: "/icon.svg",

@@ -1,3 +1,4 @@
+import { ArrowIcon } from "../../components/arrow-icon";
 import type { Metadata } from "next";
 import { Breadcrumbs } from "../../components/breadcrumbs";
 import { pageMetadata } from "../../lib/seo";
@@ -5,6 +6,9 @@ import {
   cvDownloads,
   experiences,
   presentations,
+  primaryStudies,
+  submittedAbstracts,
+  researchContribution,
   projects,
   researchExperience,
   researchOutputs,
@@ -33,12 +37,19 @@ export default function CvPage() {
           anesthesiology and experience across evidence synthesis, cohort and
           preclinical research, medical education, and health technology.
         </p>
+        <p className="cv-version">
+          September 2026 CV · Profile reviewed September 30, 2026
+        </p>
         <div className="cv-actions">
-          <a className="text-link text-link--large" href={cvDownloads.pdf} download>
-            Download CV (PDF) <span aria-hidden="true">↓</span>
+          <a
+            className="text-link text-link--large"
+            href={cvDownloads.pdf}
+            download
+          >
+            Download CV (PDF) <ArrowIcon direction="down" />
           </a>
           <a className="text-link" href={cvDownloads.docx} download>
-            Original DOCX <span aria-hidden="true">↓</span>
+            Original DOCX <ArrowIcon direction="down" />
           </a>
           <a
             className="text-link"
@@ -46,7 +57,7 @@ export default function CvPage() {
             target="_blank"
             rel="noreferrer"
           >
-            LinkedIn <span aria-hidden="true">↗</span>
+            LinkedIn <ArrowIcon direction="diagonal" />
           </a>
         </div>
       </header>
@@ -64,7 +75,8 @@ export default function CvPage() {
           <div>
             <dt>Current role</dt>
             <dd>
-              {siteProfile.currentRole.title}, {siteProfile.currentRole.organization}
+              {siteProfile.currentRole.title},{" "}
+              {siteProfile.currentRole.organization}
             </dd>
           </div>
           <div>
@@ -74,25 +86,42 @@ export default function CvPage() {
         </dl>
       </aside>
 
+      <nav className="on-this-page cv-jump-nav" aria-label="CV sections">
+        <span>On this page</span>
+        <a href="#education">Education ↓</a>
+        <a href="#primary">Studies ↓</a>
+        <a href="#manuscripts">Manuscripts ↓</a>
+        <a href="#conferences">Conferences ↓</a>
+        <a href="#skills">Skills ↓</a>
+      </nav>
       <div className="cv-document">
-        <section className="cv-section">
+        <section id="education" className="cv-section">
           <header>
             <p>01</p>
             <h2>Education & clinical experience</h2>
           </header>
           <div className="cv-entries">
-            {experiences.map((item) => (
-              <article key={`${item.title}-${item.institution}`}>
-                <p className="cv-entry__period">{item.period}</p>
-                <div>
-                  <h3>{item.title}</h3>
-                  <p className="cv-entry__institution">
-                    {item.institution} · {item.place}
-                  </p>
-                  <p>{item.description}</p>
-                </div>
-              </article>
-            ))}
+            {experiences
+              .filter((item) => item.status === "published")
+              .map((item) => (
+                <article key={`${item.title}-${item.institution}`}>
+                  <p className="cv-entry__period">{item.period}</p>
+                  <div>
+                    <h3>{item.title}</h3>
+                    <p className="cv-entry__institution">
+                      {item.institution} · {item.place}
+                    </p>
+                    <p>{item.description}</p>
+                    {item.details && (
+                      <ul>
+                        {item.details.map((detail) => (
+                          <li key={detail}>{detail}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                </article>
+              ))}
           </div>
         </section>
 
@@ -102,72 +131,144 @@ export default function CvPage() {
             <h2>Research experience</h2>
           </header>
           <div className="cv-entries">
-            {researchExperience.map((item) => (
-              <article key={`${item.institution}-${item.period}`}>
-                <p className="cv-entry__period">{item.period}</p>
-                <div>
-                  <h3>{item.title}</h3>
-                  <p className="cv-entry__institution">
-                    {item.institution} · {item.place}
-                  </p>
-                  <p>{item.description}</p>
-                  {item.details ? (
-                    <ul>
-                      {item.details.map((detail) => (
-                        <li key={detail}>{detail}</li>
-                      ))}
-                    </ul>
-                  ) : null}
-                </div>
-              </article>
-            ))}
+            {researchExperience
+              .filter((item) => item.status === "published")
+              .map((item) => (
+                <article key={`${item.institution}-${item.period}`}>
+                  <p className="cv-entry__period">{item.period}</p>
+                  <div>
+                    <h3>{item.title}</h3>
+                    <p className="cv-entry__institution">
+                      {item.institution} · {item.place}
+                    </p>
+                    <p>{item.description}</p>
+                    {item.details ? (
+                      <ul>
+                        {item.details.map((detail) => (
+                          <li key={detail}>{detail}</li>
+                        ))}
+                      </ul>
+                    ) : null}
+                  </div>
+                </article>
+              ))}
           </div>
         </section>
 
-        <section className="cv-section">
+        <section className="cv-section" id="primary">
           <header>
             <p>03</p>
-            <h2>Manuscripts under review</h2>
+            <h2>Ongoing primary research</h2>
           </header>
-          <ol className="cv-citations">
-            {researchOutputs.map((item) => (
-              <li key={item.title}>
-                <p>
-                  {item.authors}. <strong>{item.title}.</strong> {item.year}.{" "}
-                  <span>{item.stage}.</span>
-                </p>
-                {item.registration ? <p>{item.registration}</p> : null}
-              </li>
-            ))}
+          <ol className="cv-citations cv-study-list">
+            {primaryStudies
+              .filter((s) => s.status === "published")
+              .map((study) => (
+                <li key={study.title}>
+                  <h3>{study.shortTitle}</h3>
+                  <p>{study.description}</p>
+                  <p className="cv-status">{study.stage}.</p>
+                  <details>
+                    <summary>Full study title</summary>
+                    <p>{study.title}</p>
+                  </details>
+                  {study.url && (
+                    <a
+                      className="text-link"
+                      href={study.url}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {study.registration} ↗
+                    </a>
+                  )}
+                </li>
+              ))}
           </ol>
         </section>
-
-        <section className="cv-section">
+        <section className="cv-section" id="manuscripts">
           <header>
             <p>04</p>
-            <h2>Abstracts & presentations</h2>
+            <h2>Manuscripts</h2>
+          </header>
+          <p className="cv-intro-note">{researchContribution}</p>
+          <ol className="cv-citations">
+            {researchOutputs
+              .filter((item) => item.status === "published")
+              .map((item) => (
+                <li key={item.title}>
+                  <p>
+                    {item.authors}. <strong>{item.title}.</strong> {item.year}.{" "}
+                    <span>
+                      {item.stage}
+                      {item.journal
+                        ? `${item.stage === "Under review" ? " at" : " to"} ${item.journal}`
+                        : ""}
+                      .
+                    </span>
+                  </p>
+                  {item.registration ? <p>{item.registration}</p> : null}
+                </li>
+              ))}
+          </ol>
+        </section>
+
+        <section className="cv-section" id="conferences">
+          <header>
+            <p>05</p>
+            <h2>Accepted posters & prior presentations</h2>
           </header>
           <ol className="cv-citations">
-            {presentations.map((item) => (
-              <li key={item.title}>
-                <p>
-                  {item.authors}. <strong>{item.title}.</strong>{" "}
-                  <em>{item.venue}</em>, {item.year}.
-                </p>
-                <p>{item.format}</p>
-              </li>
-            ))}
+            {presentations
+              .filter((item) => item.status === "published")
+              .map((item) => (
+                <li key={item.title}>
+                  <p>
+                    {item.authors}. <strong>{item.title}.</strong>{" "}
+                    <em>{item.venue}</em>, {item.year}.
+                  </p>
+                  <p>{item.format}</p>
+                </li>
+              ))}
           </ol>
         </section>
 
         <section className="cv-section">
           <header>
-            <p>05</p>
+            <p>06</p>
+            <h2>Submitted abstracts</h2>
+          </header>
+          <p className="cv-intro-note">
+            Submitted to the Society of Critical Care Medicine Critical Care
+            Congress, 2027. Decisions pending; these are not accepted
+            presentations.
+          </p>
+          <ol className="cv-citations">
+            {submittedAbstracts
+              .filter((item) => item.status === "published")
+              .map((item) => (
+                <li key={item.title}>
+                  <p>
+                    {item.authors}. <strong>{item.title}.</strong>
+                  </p>
+                  <p>
+                    {item.format} · {item.year}.
+                  </p>
+                </li>
+              ))}
+          </ol>
+        </section>
+        <section className="cv-section">
+          <header>
+            <p>07</p>
             <h2>Selected project</h2>
           </header>
           <div className="cv-entries">
             {projects
-              .filter((project) => project.slug === "clinia")
+              .filter(
+                (project) =>
+                  project.slug === "clinia" && project.status === "published",
+              )
               .map((project) => (
                 <article key={project.slug}>
                   <p className="cv-entry__period">{project.stage}</p>
@@ -175,7 +276,9 @@ export default function CvPage() {
                     <h3>{project.title}</h3>
                     <p>{project.summary}</p>
                     {project.highlight ? <p>{project.highlight}</p> : null}
-                    {project.registration ? <p>{project.registration}.</p> : null}
+                    {project.registration ? (
+                      <p>{project.registration}.</p>
+                    ) : null}
                     {project.url ? (
                       <a
                         className="text-link"
@@ -183,7 +286,7 @@ export default function CvPage() {
                         target="_blank"
                         rel="noreferrer"
                       >
-                        Open-source project <span aria-hidden="true">↗</span>
+                        Open-source project <ArrowIcon direction="diagonal" />
                       </a>
                     ) : null}
                   </div>
@@ -194,26 +297,28 @@ export default function CvPage() {
 
         <section className="cv-section">
           <header>
-            <p>06</p>
+            <p>08</p>
             <h2>Teaching & service</h2>
           </header>
           <div className="cv-entries">
-            {teachingService.map((item) => (
-              <article key={`${item.title}-${item.institution}`}>
-                <p className="cv-entry__period">{item.period}</p>
-                <div>
-                  <h3>{item.title}</h3>
-                  <p className="cv-entry__institution">{item.institution}</p>
-                  <p>{item.description}</p>
-                </div>
-              </article>
-            ))}
+            {teachingService
+              .filter((item) => item.status === "published")
+              .map((item) => (
+                <article key={`${item.title}-${item.institution}`}>
+                  <p className="cv-entry__period">{item.period}</p>
+                  <div>
+                    <h3>{item.title}</h3>
+                    <p className="cv-entry__institution">{item.institution}</p>
+                    <p>{item.description}</p>
+                  </div>
+                </article>
+              ))}
           </div>
         </section>
 
-        <section className="cv-section cv-section--skills">
+        <section id="skills" className="cv-section cv-section--skills">
           <header>
-            <p>07</p>
+            <p>09</p>
             <h2>Skills & languages</h2>
           </header>
           <div className="cv-skills">

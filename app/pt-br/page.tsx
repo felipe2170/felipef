@@ -1,3 +1,4 @@
+import { ArrowIcon } from "../../components/arrow-icon";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { JsonLd } from "../../components/json-ld";
@@ -49,9 +50,9 @@ export default function PortuguesePage() {
         <p className="kicker">Perfil em português</p>
         <h1>Felipe de Carvalho Figueiredo</h1>
         <p className="page-intro__dek">
-          Estudante de medicina da UFMG em fase final do internato, com formatura
-          prevista para dezembro de 2026 e atuação em anestesiologia, síntese de
-          evidências e tecnologia aplicada à saúde.
+          Estudante de medicina da UFMG em fase final do internato, com
+          formatura prevista para dezembro de 2026 e interesses em
+          anestesiologia, síntese de evidências e tecnologia aplicada à saúde.
         </p>
       </header>
 
@@ -59,21 +60,37 @@ export default function PortuguesePage() {
         <div>
           <p className="kicker">Formação e interesses</p>
           <p>
-            Felipe desenvolve sua formação clínica na Universidade Federal de Minas
-            Gerais, com atenção especial à anestesiologia, medicina perioperatória,
-            manejo de vias aéreas, dor e cuidado ao paciente crítico.
+            Felipe desenvolve sua formação clínica na Universidade Federal de
+            Minas Gerais, com atenção especial à anestesiologia, medicina
+            perioperatória, manejo de vias aéreas, dor e cuidado ao paciente
+            crítico.
           </p>
           <p>
             Em 2026, concluiu um estágio clínico de 10 semanas no CHU Lille, na
-            França, com atividades em anestesia para pacientes queimados e anestesia
-            cardiotorácica. Seus trabalhos atuais incluem revisões sistemáticas,
-            metanálise pareada, metanálise em rede e revisão de evidências clínicas.
+            França, com atividades em anestesia para pacientes queimados e
+            anestesia cardiotorácica. Seus trabalhos atuais incluem revisões
+            sistemáticas, metanálise pareada, metanálise em rede e revisão de
+            evidências clínicas.
           </p>
           <p>
-            Também atua como Assistant Editor e Healthcare Consultant na Afya,
-            contribuindo para conteúdo educacional baseado em evidências e para a
-            revisão de materiais clínicos gerados por inteligência artificial.
+            Desde janeiro de 2026, atua como Assistant Editor e Healthcare
+            Consultant na Afya, contribuindo para conteúdo educacional baseado
+            em evidências e para a revisão de materiais clínicos gerados por
+            inteligência artificial.
           </p>
+          <p>
+            Foi aprovado no USMLE Step 1 em setembro de 2026. No Duolingo
+            English Test, obteve 145 pontos em julho de 2026. Esses resultados
+            não equivalem à certificação ECFMG.
+          </p>
+          <p>
+            Os trabalhos de pesquisa estão apresentados por etapa: estudos em
+            andamento, manuscritos em avaliação, pôsteres aceitos e resumos
+            submetidos com decisão pendente.
+          </p>
+          <Link className="text-link" href="/research">
+            Ver pesquisa e situação dos trabalhos ↗
+          </Link>
         </div>
         <aside>
           <p className="kicker">Em síntese</p>
@@ -84,7 +101,7 @@ export default function PortuguesePage() {
             </div>
             <div>
               <dt>Etapa</dt>
-              <dd>Internato · conclusão em dez. 2026</dd>
+              <dd>Internato · conclusão prevista em dez. 2026</dd>
             </div>
             <div>
               <dt>Direção clínica</dt>
@@ -111,7 +128,9 @@ export default function PortuguesePage() {
                   : "Exploração educacional sobre probabilidade, incerteza e raciocínio de triagem."}
               </p>
               <span>
-                {project.stage === "active" ? "Projeto ativo" : "Projeto conceitual"}
+                {project.stage === "active"
+                  ? "Projeto ativo"
+                  : "Projeto conceitual"}
               </span>
             </article>
           ))}
@@ -119,9 +138,11 @@ export default function PortuguesePage() {
 
       <section className="closing-statement">
         <p className="kicker">Contato profissional</p>
-        <h2>Aberto a conversas sobre pesquisa, mentoria e colaboração acadêmica.</h2>
+        <h2>
+          Aberto a conversas sobre pesquisa, mentoria e colaboração acadêmica.
+        </h2>
         <Link className="text-link text-link--large" href="/contact">
-          Ver formas de contato <span aria-hidden="true">↗</span>
+          Ver formas de contato <ArrowIcon direction="diagonal" />
         </Link>
       </section>
     </div>

@@ -1,3 +1,4 @@
+import { ArrowIcon } from "../../components/arrow-icon";
 import type { Metadata } from "next";
 import { Breadcrumbs } from "../../components/breadcrumbs";
 import { EmailReveal } from "../../components/email-reveal";
@@ -20,9 +21,9 @@ export default function ContactPage() {
         <p className="kicker">Contact</p>
         <h1>A good first message can be brief.</h1>
         <p className="page-intro__dek">
-          Felipe welcomes thoughtful messages from physicians, researchers, mentors,
-          and peers. A sentence about the context and the reason for reaching out is
-          enough to begin.
+          Felipe welcomes thoughtful messages from physicians, researchers,
+          mentors, and peers. A sentence about the context and the reason for
+          reaching out is enough to begin.
         </p>
       </header>
 
@@ -34,7 +35,9 @@ export default function ContactPage() {
           <p className="contact-ledger__index">01</p>
           <div>
             <h3>Email</h3>
-            <p>Best for research questions, introductions, and detailed context.</p>
+            <p>
+              Best for research questions, introductions, and detailed context.
+            </p>
           </div>
           <EmailReveal />
         </article>
@@ -50,7 +53,7 @@ export default function ContactPage() {
             target="_blank"
             rel="noreferrer"
           >
-            View profile <span aria-hidden="true">↗</span>
+            View profile <ArrowIcon direction="diagonal" />
           </a>
         </article>
       </section>
