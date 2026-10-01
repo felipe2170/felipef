@@ -29,7 +29,10 @@ export default async function BlogPage() {
       </header>
 
       {posts.length > 0 ? (
-        <section className="notes-index blog-index" aria-label="Published posts">
+        <section
+          className="notes-index blog-index"
+          aria-label="Published posts"
+        >
           {posts.map((post, index) => (
             <article key={post.slug}>
               <p className="notes-index__number">
@@ -60,7 +63,9 @@ export default async function BlogPage() {
         <section className="empty-state">
           <p className="kicker">In preparation</p>
           <h2>The first post is being prepared.</h2>
-          <p>Published Markdown files added to the blog folder will appear here.</p>
+          <p>
+            Published Markdown files added to the blog folder will appear here.
+          </p>
         </section>
       )}
     </div>

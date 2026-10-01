@@ -1,7 +1,7 @@
 # Felipe de Carvalho Figueiredo — Academic Profile
 
 An editorial, research-oriented personal website built with Next.js and designed
-for static deployment on Vercel Hobby.
+for deployment on Vercel Hobby. Most routes are statically generated; legacy note redirects use Next.js routing.
 
 ## Local development
 
@@ -10,10 +10,12 @@ pnpm install
 pnpm dev
 ```
 
-Run the production check with:
+Run the production and browser checks with:
 
 ```bash
+pnpm typecheck
 pnpm build
+pnpm test:e2e
 ```
 
 ## Verified profile content
@@ -75,3 +77,36 @@ same commit.
 4. Keep the same full name and site URL on confirmed professional profiles.
 5. Re-run structured-data, accessibility, and performance checks after material
    content updates.
+
+## September 2026 audit and design
+
+- Claim-by-claim reconciliation: [content audit](docs/content-audit-2026-09-30.md).
+- Asset provenance and hashes: [CV manifest](docs/cv-assets.json).
+- Local GitHub wording draft: [suggested profile copy](docs/github-profile-suggested-copy.md).
+- Executed verification: [validation record](docs/validation-2026-09-30.md).
+
+`status` controls website visibility; `stage` and `format` describe research progress.
+Never infer publication from `status: "published"`. The research library separates
+manuscripts, accepted posters, submitted abstracts, and past presentations. Both
+primary studies remain explicitly in progress. The older triage concept is retained
+as a draft until current source material confirms its scope.
+
+The visual system combines the shared primitives in `app/globals.css` with
+`app/editorial.css`. Custom SVG illustrations in `components/inquiry-graphic.tsx`
+are decorative, not research data. Font variables must stay on the root element.
+
+Browser checks use Chromium, Playwright, and axe-core. Install a browser with
+`pnpm exec playwright install chromium` if no local Chromium exists, or set
+`PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH`. Tests launch a production server on port 3100.
+They cover responsive routes, light/dark accessibility, research filtering, the mobile
+keyboard menu, storage-denied theme changes, downloads, metadata, and redirects.
+
+To regenerate the bundled PDF after replacing the original DOCX:
+
+```bash
+python scripts/render-cv.py
+```
+
+The script needs python-docx, ReportLab, and DejaVu fonts. Compare the extracted PDF
+text with the DOCX and inspect every page before replacing the downloads. Update
+`docs/cv-assets.json`, the profile source date, and the online data together.

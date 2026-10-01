@@ -1,3 +1,4 @@
+import { ArrowIcon } from "../components/arrow-icon";
 import Link from "next/link";
 
 export default function NotFound() {
@@ -10,7 +11,7 @@ export default function NotFound() {
         publication.
       </p>
       <Link className="text-link text-link--large" href="/">
-        Return to the profile <span aria-hidden="true">↗</span>
+        Return to the profile <ArrowIcon direction="diagonal" />
       </Link>
     </section>
   );

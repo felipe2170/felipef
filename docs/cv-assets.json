@@ -1,0 +1,10 @@
+{
+  "source": "User-supplied Felipe_Figueiredo_CV.docx",
+  "sourceModifiedAt": "2026-09-26T02:08:00Z",
+  "reviewedAt": "2026-09-30",
+  "pdf": "Re-typeset from the same DOCX; all paragraph text verified against the PDF.",
+  "sha256": {
+    "public/cv/Felipe_de_Carvalho_Figueiredo_CV.pdf": "baef6dce2e0be580092f0d895c95018de52efac4b20d1ef2e3b4edb822cb5a52",
+    "public/cv/Felipe_de_Carvalho_Figueiredo_CV.docx": "08587085c3c18c26d95fec3f7b0a95df081bd00cac267b3ce67fded3316eb321"
+  }
+}

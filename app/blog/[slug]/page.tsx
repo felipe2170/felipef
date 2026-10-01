@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Breadcrumbs } from "../../../components/breadcrumbs";
 import { JsonLd } from "../../../components/json-ld";
@@ -68,7 +69,7 @@ export default async function BlogPostPage({ params }: Props) {
           items={[{ label: "Blog", href: "/blog" }, { label: post.title }]}
         />
 
-        <article className="note-article">
+        <article className="note-article" lang={post.language}>
           <header>
             <p className="kicker">Blog · {post.readingMinutes} min read</p>
             <h1>{post.title}</h1>
@@ -77,12 +78,20 @@ export default async function BlogPostPage({ params }: Props) {
               {formatBlogDate(post.date, post.language)}
             </time>
           </header>
-          <div className="prose" dangerouslySetInnerHTML={{ __html: post.html }} />
+          <div
+            className="prose"
+            dangerouslySetInnerHTML={{ __html: post.html }}
+          />
           <footer>
             <p>
               Written by <strong>{siteProfile.name}</strong>, medical student at{" "}
               {siteProfile.affiliation.shortName}.
             </p>
+            <div className="article-next">
+              <Link className="text-link" href="/blog">
+                ← Back to all writing
+              </Link>
+            </div>
           </footer>
         </article>
       </div>

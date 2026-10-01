@@ -19,7 +19,11 @@ export function ThemeToggle() {
     const next = getCurrentTheme() === "dark" ? "light" : "dark";
     document.documentElement.dataset.theme = next;
     document.documentElement.style.colorScheme = next;
-    localStorage.setItem("felipef-theme", next);
+    try {
+      localStorage.setItem("felipef-theme", next);
+    } catch {
+      /* Theme still works when storage is unavailable. */
+    }
     setTheme(next);
   }
 

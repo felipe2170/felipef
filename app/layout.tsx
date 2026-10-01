@@ -5,6 +5,7 @@ import { SiteFooter } from "../components/site-footer";
 import { SiteHeader } from "../components/site-header";
 import { siteProfile } from "../lib/site";
 import "./globals.css";
+import "./editorial.css";
 
 const bodyFont = Source_Sans_3({
   subsets: ["latin"],
@@ -49,7 +50,7 @@ export const metadata: Metadata = {
     "Felipe de Carvalho Figueiredo",
     "Felipe Figueiredo UFMG",
     "Felipe Figueiredo anesthesiology",
-    "Felipe Figueiredo médico",
+    "Felipe Figueiredo estudante de medicina",
     "felipedcfigueiredo",
     "systematic review",
     "meta-analysis",
@@ -72,24 +73,33 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f2eee6" },
-    { media: "(prefers-color-scheme: dark)", color: "#141311" },
+    { media: "(prefers-color-scheme: light)", color: "#f6f5ef" },
+    { media: "(prefers-color-scheme: dark)", color: "#15251f" },
   ],
   colorScheme: "light dark",
 };
 
-export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
+export default function RootLayout({
+  children,
+}: Readonly<{ children: ReactNode }>) {
   return (
-    <html id="top" lang="en" suppressHydrationWarning>
+    <html
+      id="top"
+      lang="en"
+      className={`${bodyFont.variable} ${displayFont.variable}`}
+      suppressHydrationWarning
+    >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body className={`${bodyFont.variable} ${displayFont.variable}`}>
+      <body>
         <a className="skip-link" href="#main-content">
           Skip to content
         </a>
         <SiteHeader />
-        <main id="main-content">{children}</main>
+        <main id="main-content" tabIndex={-1}>
+          {children}
+        </main>
         <SiteFooter />
       </body>
     </html>
