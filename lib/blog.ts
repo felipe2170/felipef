@@ -12,6 +12,10 @@ const postSchema = z.object({
   title: z.string().trim().min(8),
   summary: z.string().trim().min(30),
   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+  updated: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/)
+    .optional(),
   language: z.enum(["en", "pt-BR"]).default("en"),
   status: z.enum(["draft", "published"]).default("published"),
   image: z.string().trim().optional(),
@@ -124,10 +128,7 @@ export async function getBlogPostBySlug(slug: string) {
   return { slug, ...data, html, readingMinutes };
 }
 
-export function formatBlogDate(
-  date: string,
-  locale: "en" | "pt-BR" = "en",
-) {
+export function formatBlogDate(date: string, locale: "en" | "pt-BR" = "en") {
   return new Intl.DateTimeFormat(locale === "pt-BR" ? "pt-BR" : "en-US", {
     year: "numeric",
     month: "long",

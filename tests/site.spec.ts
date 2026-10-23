@@ -9,6 +9,11 @@ const routes = [
   "/cv",
   "/contact",
   "/pt-br",
+  "/pt-br/about",
+  "/pt-br/research",
+  "/pt-br/projects",
+  "/pt-br/cv",
+  "/pt-br/contact",
   "/blog",
   "/blog/clinical-prediction-begins-with-the-clock",
   "/blog/building-tools-for-the-work-of-learning",
@@ -46,42 +51,61 @@ for (const mode of ["light", "dark"] as const) {
   }
 }
 
-test("research types, combined search, empty state, and reset", async ({
+test("research collection, combined filters, shared URLs, history, and recovery", async ({
   page,
 }) => {
   await page.goto("/research");
-  await page
-    .getByRole("button", { name: "Accepted posters", exact: true })
-    .click();
-  await expect(page.locator(".research-records > li")).toHaveCount(2);
-  await expect(page.locator(".research-records")).toContainText(
-    "Accepted digital poster",
-  );
-  await page.getByRole("searchbox", { name: "Search research" }).fill("glioma");
+  const search = page.getByRole("searchbox", { name: "Search research" });
+  await search.fill("opioid");
   await expect(page.locator(".research-records > li")).toHaveCount(1);
-  await page
-    .getByRole("button", { name: "Submitted abstracts", exact: true })
-    .click();
+  await expect(page.locator(".research-records")).toContainText(
+    "Opioid stewardship",
+  );
+  await expect(
+    page.locator(".research-records a[href^='https://doi.org/']"),
+  ).toHaveCount(1);
+  await page.getByRole("button", { name: "Manuscripts", exact: true }).click();
   await expect(
     page.getByRole("heading", { name: "No matching work." }),
   ).toBeVisible();
+  await page.goBack();
+  await expect(page.locator(".research-records > li")).toHaveCount(1);
+  await page
+    .getByRole("button", { name: "Clear filters", exact: true })
+    .click();
+  await page
+    .getByRole("button", { name: "Accepted conference outputs", exact: true })
+    .click();
+  await search.fill("SCCM");
+  await expect(page.locator(".research-records > li")).toHaveCount(7);
+  await expect(page.locator(".status-tag")).toHaveText(
+    Array(7).fill("Accepted for presentation"),
+  );
+  await page.reload();
+  await expect(search).toHaveValue("SCCM");
+  await expect(page.locator(".research-records > li")).toHaveCount(7);
+  await page
+    .getByRole("link", { name: "Ler em português", exact: true })
+    .click();
+  await expect(page).toHaveURL(/pt-br\/research\?type=accepted&q=SCCM/);
+  await expect(page.locator("html")).toHaveAttribute("lang", "pt-BR");
+  await expect(page.getByRole("searchbox")).toHaveValue("SCCM");
+  await expect(page.locator(".status-tag")).toHaveText(
+    Array(7).fill("Aceito para apresentação"),
+  );
+  await page.goto(
+    "/research?type=manuscripts&q=CRD420261492790#research-library",
+  );
+  await expect(page.locator(".research-records > li")).toHaveCount(1);
+  await expect(page.locator(".research-records")).toContainText("Under review");
+  await expect(page.locator(".research-records")).toContainText(
+    "Anaesthesia Critical Care & Pain Medicine",
+  );
+  await page.getByRole("searchbox").fill("unmatched-query");
   await page
     .getByRole("button", { name: "Show all research", exact: true })
     .click();
-  await expect(page.locator(".research-records > li")).toHaveCount(17);
-  await page
-    .getByRole("button", { name: "Submitted abstracts", exact: true })
-    .click();
-  await expect(page.locator(".research-records > li")).toHaveCount(8);
-  await expect(page.locator(".status-tag")).toHaveText(
-    Array(8).fill("Submitted abstract · decision pending"),
-  );
-  await page.getByRole("button", { name: "Manuscripts", exact: true }).click();
-  await page.getByRole("searchbox").fill("CRD420261492790");
-  await expect(page.locator(".research-records > li")).toHaveCount(1);
-  await expect(page.locator(".research-records")).toContainText(
-    "Prepared for submission",
-  );
+  await expect(page.locator(".research-records > li")).toHaveCount(19);
 });
 
 test("mobile keyboard menu: focus, Escape, route changes, resize", async ({
@@ -141,7 +165,7 @@ test("theme persistence, reduced motion, and storage denial", async ({
   await page.emulateMedia({ reducedMotion: "reduce" });
   expect(
     await page
-      .locator(".hero-atlas")
+      .locator(".portrait-hero")
       .evaluate((el) => parseFloat(getComputedStyle(el).animationDuration)),
   ).toBeLessThan(0.01);
   const restricted = await context.newPage();
@@ -171,8 +195,10 @@ test("updated credentials and superseded claims stay consistent", async ({
     "USMLE Step 1: Pass (September 2026)",
   );
   await expect(page.locator("main")).toContainText("Jan 2026 — present");
-  await expect(page.locator("main")).toContainText("Duolingo English Test 145");
-  await expect(page.locator("main")).not.toContainText("English — C2");
+  await expect(page.locator("main")).not.toContainText(
+    "Duolingo English Test 145",
+  );
+  await expect(page.locator("main")).toContainText("English — C2");
   await expect(page.locator("main")).not.toContainText(
     "Cerebral Autoregulation-Guided BP Targets",
   );
@@ -198,7 +224,7 @@ test("blog, legacy redirects, metadata, and internal links", async ({
     await page.goto(route);
     expect(
       await page.locator('link[rel="canonical"]').getAttribute("href"),
-    ).toBe(`https://felipef.com${route === "/" ? "" : route}`);
+    ).toBe(`https://www.felipef.com${route === "/" ? "" : route}`);
     for (const href of await page
       .locator('a[href^="/"]')
       .evaluateAll((els) => els.map((el) => el.getAttribute("href")!)))
@@ -246,4 +272,153 @@ test("narrow and tablet layouts keep content within the viewport", async ({
       ).toBeTruthy();
     }
   }
+});
+
+test("citation relationships preserve distinct outputs and source omissions", async ({
+  page,
+}) => {
+  await page.goto("/research");
+  const records = page.locator(".research-records");
+  const ids = await records
+    .locator("> li")
+    .evaluateAll((els) => els.map((el) => el.id));
+  expect(new Set(ids).size).toBe(ids.length);
+  await page.getByRole("searchbox").fill("Remimazolam");
+  await expect(records.locator("> li")).toHaveCount(3);
+  await expect(
+    page.locator("#record-remimazolam-propofol-sccm .record-authors"),
+  ).toHaveCount(0);
+  await page.goto("/cv");
+  await expect(page.locator("#manuscripts .cv-citations > li")).toHaveCount(5);
+  await expect(page.locator("#conferences .cv-citations > li")).toHaveCount(7);
+});
+
+test("localization, reciprocal alternates, and localized actions", async ({
+  page,
+}) => {
+  for (const suffix of [
+    "",
+    "/about",
+    "/research",
+    "/projects",
+    "/cv",
+    "/contact",
+  ]) {
+    await page.goto("/pt-br" + suffix);
+    await expect(page.locator("html")).toHaveAttribute("lang", "pt-BR");
+    await expect(page.locator('link[hreflang="en"]')).toHaveAttribute(
+      "href",
+      "https://www.felipef.com" + suffix,
+    );
+    await page
+      .getByRole("link", { name: "Read in English", exact: true })
+      .click();
+    await expect(page.locator("html")).toHaveAttribute("lang", "en");
+    await expect(page).toHaveURL(new RegExp(suffix || "/$"));
+  }
+  await page.goto("/pt-br/contact");
+  await page.getByRole("button", { name: "Mostrar endereço de email" }).click();
+  await expect(page.locator('a[href^="mailto:"]')).toBeFocused();
+});
+
+test("clipboard failure keeps a selectable address and mailto fallback", async ({
+  page,
+}) => {
+  await page.addInitScript(() =>
+    Object.defineProperty(navigator, "clipboard", {
+      value: { writeText: () => Promise.reject(new Error("Denied")) },
+      configurable: true,
+    }),
+  );
+  await page.goto("/contact");
+  await page.getByRole("button", { name: "Reveal email address" }).click();
+  await page.getByRole("button", { name: "Copy email address" }).click();
+  await expect(page.getByRole("status")).toContainText("Copy unavailable");
+  await expect(page.locator('a[href^="mailto:"]')).toBeVisible();
+});
+
+test("skip link, anchors, text enlargement, and reflow", async ({ page }) => {
+  await page.goto("/");
+  await page.keyboard.press("Tab");
+  await expect(
+    page.getByRole("link", { name: "Skip to content" }),
+  ).toBeFocused();
+  await page.keyboard.press("Enter");
+  await expect(page.locator("main")).toBeFocused();
+  for (const route of [
+    "/",
+    "/research",
+    "/cv",
+    "/pt-br/research",
+    "/blog/clinical-prediction-begins-with-the-clock",
+  ]) {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.goto(route);
+    await page.evaluate(() => {
+      const sizes = Array.from(
+        document.body.querySelectorAll<HTMLElement>("*"),
+      ).map((el) => [el, parseFloat(getComputedStyle(el).fontSize)] as const);
+      for (const [el, size] of sizes) el.style.fontSize = size * 2 + "px";
+    });
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= innerWidth,
+      ),
+      route + " 200% text",
+    ).toBeTruthy();
+    await page.setViewportSize({ width: 320, height: 900 });
+    await page.reload();
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= innerWidth,
+      ),
+      route + " 400% equivalent reflow",
+    ).toBeTruthy();
+  }
+  await page.goto("/research#ugib-intubation");
+  await expect(page.locator("#ugib-intubation")).toBeInViewport();
+  expect(
+    (await page.locator("#ugib-intubation").boundingBox())!.y,
+  ).toBeGreaterThanOrEqual(68);
+});
+
+test("preferred host redirects and missing-page status", async ({
+  request,
+}) => {
+  const response = await request.get("/research?q=opioid", {
+    headers: { host: "felipef.com" },
+    maxRedirects: 0,
+  });
+  expect(response.status()).toBe(308);
+  expect(response.headers().location).toBe(
+    "https://www.felipef.com/research?q=opioid",
+  );
+  const missing = await request.get("/not-a-real-page");
+  expect(missing.status()).toBe(404);
+  expect(await missing.text()).toContain(
+    "This page is not part of the current profile.",
+  );
+  expect((await request.get("/blog/not-a-real-article")).status()).toBe(404);
+});
+
+test("narrow portrait and language navigation do not obscure content or retain unrelated queries", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 320, height: 900 });
+  await page.goto("/");
+  const title = await page.locator(".hero-copy h1").boundingBox();
+  const portrait = await page.locator(".hero-portrait").boundingBox();
+  expect(title!.x + title!.width).toBeLessThan(portrait!.x);
+  expect(
+    await page
+      .locator(".hero-copy h1")
+      .evaluate((el) => el.scrollWidth <= el.clientWidth),
+  ).toBeTruthy();
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/research?q=opioid");
+  await page.getByRole("link", { name: "About", exact: true }).first().click();
+  await page
+    .getByRole("link", { name: "Ler em português", exact: true })
+    .click();
+  await expect(page).toHaveURL(/\/pt-br\/about$/);
 });

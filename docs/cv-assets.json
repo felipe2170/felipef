@@ -1,10 +1,16 @@
 {
-  "source": "User-supplied Felipe_Figueiredo_CV.docx",
-  "sourceModifiedAt": "2026-09-26T02:08:00Z",
-  "reviewedAt": "2026-09-30",
-  "pdf": "Re-typeset from the same DOCX; all paragraph text verified against the PDF.",
-  "sha256": {
-    "public/cv/Felipe_de_Carvalho_Figueiredo_CV.pdf": "baef6dce2e0be580092f0d895c95018de52efac4b20d1ef2e3b4edb822cb5a52",
-    "public/cv/Felipe_de_Carvalho_Figueiredo_CV.docx": "08587085c3c18c26d95fec3f7b0a95df081bd00cac267b3ce67fded3316eb321"
+  "source": "User-supplied FelipeCVLatest.docx",
+  "sourceModified": "2026-10-21T21:27:51Z",
+  "docxCopiedByteForByte": true,
+  "pdfTextParity": true,
+  "files": {
+    "Felipe_de_Carvalho_Figueiredo_CV.docx": {
+      "sha256": "a99bb0605db58b6fca1761f2f9ddbf3933d8bfc9c72adee40c558515c4f80bda",
+      "bytes": 18441
+    },
+    "Felipe_de_Carvalho_Figueiredo_CV.pdf": {
+      "sha256": "b5d8cfc11d3e2f308c1dacaec3c336754b60ad184815fec64401dcc2225336dc",
+      "bytes": 71356
+    }
   }
 }

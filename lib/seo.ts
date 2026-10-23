@@ -1,40 +1,41 @@
 import type { Metadata } from "next";
 import { siteProfile } from "./site";
-
-type PageMetadataOptions = {
-  title: string;
-  description: string;
-  path: string;
-  locale?: "en" | "pt-BR";
-  noIndex?: boolean;
-};
-
+const essentials = ["", "/about", "/research", "/projects", "/cv", "/contact"];
 export function pageMetadata({
   title,
   description,
   path,
   locale = "en",
   noIndex = false,
-}: PageMetadataOptions): Metadata {
-  const canonical = `${siteProfile.url}${path}`;
-
+}: {
+  title: string;
+  description: string;
+  path: string;
+  locale?: "en" | "pt-BR";
+  noIndex?: boolean;
+}): Metadata {
+  const canonical = siteProfile.url + path;
+  const english = path.replace(/^\/pt-br/, "");
+  const localized = essentials.includes(english);
   return {
     title,
     description,
     alternates: {
       canonical,
-      languages:
-        path === "" || path === "/pt-br"
-          ? {
-              en: siteProfile.url,
-              "pt-BR": `${siteProfile.url}/pt-br`,
-              "x-default": siteProfile.url,
-            }
-          : undefined,
+      languages: localized
+        ? {
+            en: siteProfile.url + english,
+            "pt-BR": siteProfile.url + "/pt-br" + english,
+            "x-default": siteProfile.url + english,
+          }
+        : undefined,
     },
-    robots: noIndex
-      ? { index: false, follow: false }
-      : { index: true, follow: true },
+    robots:
+      noIndex ||
+      process.env.VERCEL_ENV === "preview" ||
+      process.env.SITE_NOINDEX === "1"
+        ? { index: false, follow: false }
+        : { index: true, follow: true },
     openGraph: {
       type: "website",
       url: canonical,
@@ -44,7 +45,7 @@ export function pageMetadata({
       locale: locale === "pt-BR" ? "pt_BR" : "en_US",
       images: [
         {
-          url: "/opengraph-image",
+          url: siteProfile.url + "/opengraph-image",
           width: 1200,
           height: 630,
           alt: siteProfile.name,
@@ -55,7 +56,7 @@ export function pageMetadata({
       card: "summary_large_image",
       title,
       description,
-      images: ["/opengraph-image"],
+      images: [siteProfile.url + "/opengraph-image"],
     },
   };
 }

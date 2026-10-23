@@ -2,6 +2,7 @@
 title: "Building tools for the work of learning"
 summary: "What a clinical internship tool should make easier, how to keep its scope clear, and why adoption and clinical benefit are different claims."
 date: "2026-09-30"
+updated: "2026-10-22"
 language: "en"
 status: "published"
 ---
@@ -26,7 +27,7 @@ This boundary affects both the interface and the language used to describe the p
 
 ## Separate use from benefit
 
-My September 2026 CV reports approximately 200 users across multiple Brazilian medical schools. That is a description of use at a particular point in the project. It does not establish that the application improves learning outcomes or patient care.
+A user count can describe the reach of a tool, but it needs a definition and a measurement date. It does not by itself establish that the application improves learning outcomes or patient care.
 
 Those are different questions and would require different forms of evaluation. Task completion, ease of retrieving a note, and the clarity of a workflow could inform a usability assessment. A claim about educational effectiveness would require a design that measures educational outcomes. A claim about clinical benefit would require a further, appropriately scoped evaluation.
 

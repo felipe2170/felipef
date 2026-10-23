@@ -8,7 +8,7 @@ function getCurrentTheme(): Theme {
   return document.documentElement.dataset.theme === "dark" ? "dark" : "light";
 }
 
-export function ThemeToggle() {
+export function ThemeToggle({ locale = "en" }: { locale?: "en" | "pt-BR" }) {
   const [theme, setTheme] = useState<Theme | null>(null);
 
   useEffect(() => {
@@ -28,20 +28,28 @@ export function ThemeToggle() {
   }
 
   const dark = theme === "dark";
+  const label =
+    locale === "pt-BR"
+      ? dark
+        ? "Usar tema claro"
+        : "Usar tema escuro"
+      : dark
+        ? "Use light theme"
+        : "Use dark theme";
 
   return (
     <button
       className="theme-toggle"
       type="button"
       onClick={toggleTheme}
-      aria-label={dark ? "Use light theme" : "Use dark theme"}
+      aria-label={label}
       aria-pressed={dark}
-      title={dark ? "Use light theme" : "Use dark theme"}
+      title={label}
     >
       <span className="theme-toggle__symbol" aria-hidden="true">
         {dark ? "☼" : "◐"}
       </span>
-      <span className="sr-only">{dark ? "Light theme" : "Dark theme"}</span>
+      <span className="sr-only">{label}</span>
     </button>
   );
 }
