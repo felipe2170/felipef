@@ -25,7 +25,7 @@ heading = ParagraphStyle('heading', parent=body, fontName='BodyBold', fontSize=9
 name = ParagraphStyle('name', parent=body, fontName='Display', fontSize=24, leading=29, spaceAfter=10, keepWithNext=True)
 contact = ParagraphStyle('contact', parent=body, fontSize=8, leading=12, spaceAfter=14)
 role = ParagraphStyle('role', parent=body, fontName='BodyBold', spaceBefore=5, keepWithNext=True)
-headings = {'EDUCATION','CLINICAL EXPERIENCE','RESEARCH EXPERIENCE','ONGOING PRIMARY RESEARCH','MANUSCRIPTS','ACCEPTED ABSTRACTS AND POSTER PRESENTATIONS','SUBMITTED ABSTRACTS','OPEN-SOURCE TOOL','TEACHING AND SERVICE','SKILLS'}
+headings = {'EDUCATION','CLINICAL EXPERIENCE','RESEARCH EXPERIENCE','ONGOING PRIMARY RESEARCH','MANUSCRIPTS','ACCEPTED ABSTRACTS AND POSTER PRESENTATIONS','SUBMITTED ABSTRACTS','OPEN-SOURCE TOOL','TEACHING AND SERVICE','SKILLS','MANUSCRIPTS UNDER REVIEW','ABSTRACTS ACCEPTED FOR PRESENTATION','ABSTRACTS & POSTER PRESENTATIONS','OPEN-SOURCE TOOLS','TEACHING, SERVICE & INNOVATION'}
 
 def footer(canvas, doc):
     canvas.saveState()
@@ -33,7 +33,7 @@ def footer(canvas, doc):
     canvas.line(45, 37, A4[0]-45, 37)
     canvas.setFont('Body', 7)
     canvas.setFillColor(colors.HexColor('#526059'))
-    canvas.drawString(45, 25, 'Felipe C. Figueiredo | September 2026 CV')
+    canvas.drawString(45, 25, 'Felipe C. Figueiredo | October 21, 2026 CV')
     canvas.drawRightString(A4[0]-45, 25, str(doc.page))
     canvas.restoreState()
 
@@ -41,8 +41,11 @@ class WholeParagraph(Paragraph):
     def split(self, availWidth, availHeight):
         return []
 
+document=Document(source)
+if document.tables or document.inline_shapes:
+    raise SystemExit("CV contains tables/images. Extend the exporter before replacing the PDF.")
 story=[]
-for i, para in enumerate(Document(source).paragraphs):
+for i, para in enumerate(document.paragraphs):
     text=para.text.strip()
     if not text: continue
     style = name if i == 0 else contact if i == 1 else heading if text in headings else role if ' | ' in text and not text.startswith(('•','Research:','Computational:')) else body

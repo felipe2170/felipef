@@ -45,8 +45,10 @@ export interface ResearchInterest {
 }
 
 export interface ResearchOutput {
+  id: string;
+  studyId: string;
   title: string;
-  authors: string;
+  authors?: string;
   year: number;
   stage: "Under review" | "Prepared for submission";
   journal?: string;
@@ -56,11 +58,14 @@ export interface ResearchOutput {
 }
 
 export interface Presentation {
+  id: string;
+  studyId: string;
   title: string;
-  authors: string;
+  authors?: string;
   year: number;
   venue: string;
   format:
+    | "Accepted for presentation"
     | "Accepted digital poster"
     | "Review presentation"
     | "Case presentation"
@@ -69,6 +74,7 @@ export interface Presentation {
 }
 
 export interface PrimaryStudy {
+  id: string;
   title: string;
   shortTitle: string;
   description: string;
@@ -98,6 +104,7 @@ export interface BlogPost {
   title: string;
   summary: string;
   date: string;
+  updated?: string;
   language: "en" | "pt-BR";
   status: ContentStatus;
   image?: string;
@@ -106,7 +113,7 @@ export interface BlogPost {
 export const siteProfile: SiteProfile = {
   name: "Felipe de Carvalho Figueiredo",
   shortName: "Felipe C. Figueiredo",
-  url: "https://felipef.com",
+  url: "https://www.felipef.com",
   locale: "en",
   alternateLocale: "pt-BR",
   location: "Belo Horizonte, Brazil",
@@ -129,7 +136,7 @@ export const siteProfile: SiteProfile = {
     linkedin: "https://www.linkedin.com/in/felipedcfigueiredo",
     github: "https://github.com/felipe2170",
   },
-  updatedAt: "2026-09-30",
+  updatedAt: "2026-10-22",
 };
 
 export const experiences: Experience[] = [
@@ -143,7 +150,6 @@ export const experiences: Experience[] = [
     details: [
       "WES course-by-course evaluated GPA: 3.73/4.00, based on 245 completed credit hours through the 10th semester.",
       "USMLE Step 1: Pass (September 2026).",
-      "Duolingo English Test: 145 (July 17, 2026).",
     ],
     status: "published",
   },
@@ -190,7 +196,7 @@ export const researchExperience: Experience[] = [
       "Contributed to preclinical cardiovascular research on blood-pressure regulation using MRGPRD-knockout mouse models.",
     details: [
       "Performed tail-cuff plethysmography and analyzed cardiovascular physiology data.",
-      "Performed spectrophotometric assays, biospecimen preparation, and vascular-reactivity experiments.",
+      "Performed spectrophotometric assays, biospecimen preparation, and vascular-reactivity experiments evaluating alamandine-mediated responses and arterial stiffness.",
     ],
     status: "published",
   },
@@ -230,6 +236,7 @@ export const researchContribution =
 
 export const primaryStudies: PrimaryStudy[] = [
   {
+    id: "opioid-stewardship",
     shortTitle: "Opioid stewardship after orthopedic surgery",
     title:
       "From Inpatient Analgesia to Discharge Prescribing: Clinically Validated Machine Learning to Identify Opioid Stewardship Opportunities After Orthopedic Surgery",
@@ -241,6 +248,7 @@ export const primaryStudies: PrimaryStudy[] = [
     status: "published",
   },
   {
+    id: "tbi-hypotension",
     shortTitle: "Hypotension warnings after traumatic brain injury",
     title:
       "Clinical Usefulness and Transportability of Routine-Data Hypotension Warnings After Traumatic Brain Injury",
@@ -253,6 +261,8 @@ export const primaryStudies: PrimaryStudy[] = [
 
 export const researchOutputs: ResearchOutput[] = [
   {
+    id: "remimazolam-network-manuscript",
+    studyId: "remimazolam-network",
     title:
       "Remimazolam as a Novel Sedative Agent in Adult Intensive Care Units: A Systematic Review and Network Meta-Analysis",
     authors: "Figueiredo FC, et al",
@@ -264,6 +274,8 @@ export const researchOutputs: ResearchOutput[] = [
     status: "published",
   },
   {
+    id: "myectomy-mitral-manuscript",
+    studyId: "myectomy-mitral",
     title:
       "Septal Myectomy Combined with Mitral Valve Repair vs. Replacement in Hypertrophic Cardiomyopathy: A Systematic Review and Meta-analysis",
     authors:
@@ -275,6 +287,8 @@ export const researchOutputs: ResearchOutput[] = [
     status: "published",
   },
   {
+    id: "htk-cardioplegia-manuscript",
+    studyId: "htk-cardioplegia",
     title:
       "Histidine-Tryptophan-Ketoglutarate (HTK/Custodiol) Cardioplegia Versus Blood Cardioplegia for Myocardial Protection in Adult Valve Surgery: A Systematic Review and Meta-Analysis",
     authors:
@@ -286,6 +300,8 @@ export const researchOutputs: ResearchOutput[] = [
     status: "published",
   },
   {
+    id: "afya-medqol-manuscript",
+    studyId: "afya-medqol",
     title:
       "afya-medqol: A Python Package for Computing the Afya MedQoL Physician Quality-of-Life Index",
     authors: "Souza M, Figueiredo FC",
@@ -295,12 +311,14 @@ export const researchOutputs: ResearchOutput[] = [
     status: "published",
   },
   {
+    id: "ugib-intubation-manuscript",
+    studyId: "ugib-intubation",
     title:
-      "Prophylactic Pre-Endoscopic Intubation in Acute Upper Gastrointestinal Bleeding: A Systematic Review and Meta-Analysis",
+      "Prophylactic Pre-Endoscopic Intubation in Acute Upper GI Bleeding: Systematic Review & Meta-Analysis",
     authors: "Figueiredo FC, et al",
     year: 2026,
-    stage: "Prepared for submission",
-    journal: "Journal of Critical Care",
+    stage: "Under review",
+    journal: "Anaesthesia Critical Care & Pain Medicine",
     methods: "Systematic review and meta-analysis",
     registration: "PROSPERO CRD420261492790",
     status: "published",
@@ -309,14 +327,20 @@ export const researchOutputs: ResearchOutput[] = [
 
 export const presentations: Presentation[] = [
   {
-    title: researchOutputs[2].title,
-    authors: researchOutputs[2].authors,
+    id: "htk-aha-2026",
+    studyId: "htk-cardioplegia",
+    title:
+      "Histidine-Tryptophan-Ketoglutarate (HTK/Custodiol) Cardioplegia Versus Cardioplegia for Myocardial Protection in Adult Valve Surgery: A Systematic Review and Meta-Analysis",
+    authors: researchOutputs.find((o) => o.studyId === "htk-cardioplegia")!
+      .authors,
     year: 2026,
     venue: "American Heart Association Scientific Sessions",
     format: "Accepted digital poster",
     status: "published",
   },
   {
+    id: "glioma-cns-2026",
+    studyId: "glioma-mapk",
     title:
       "Durability, discontinuation, rebound progression, and rechallenge after MAPK-pathway inhibition in pediatric BRAF V600E-mutant low-grade glioma: a systematic review and meta-analysis",
     authors: "Figueiredo FC, et al",
@@ -326,6 +350,8 @@ export const presentations: Presentation[] = [
     status: "published",
   },
   {
+    id: "snakebite-2024",
+    studyId: "snakebite",
     title: "Snakebite Emergencies: A Review",
     authors: "Figueiredo FC, et al",
     year: 2024,
@@ -334,6 +360,8 @@ export const presentations: Presentation[] = [
     status: "published",
   },
   {
+    id: "myocardial-bridge-2023",
+    studyId: "myocardial-bridge",
     title: "Myocardial Bridge in Athletes: A Case Study",
     authors: "Figueiredo FC, et al",
     year: 2023,
@@ -344,52 +372,73 @@ export const presentations: Presentation[] = [
   },
 ];
 
-export const submittedAbstracts: Presentation[] = [
-  { title: researchOutputs[0].title, authors: "Figueiredo FC, et al" },
+export const acceptedAbstracts: Presentation[] = [
   {
+    id: "remimazolam-soc-sccm",
+    studyId: "remimazolam-soc",
     title:
-      "Early Vasopressor with Fluid Restriction Versus Standard Fluid Resuscitation in Septic Shock",
-    authors: "Figueiredo FC, et al",
+      "Remimazolam vs Standard of Care in Adult Intensive Care Units: A Systematic Review and Meta-Analysis.",
+    authors: "Figueiredo FC, et al.",
   },
   {
+    id: "remimazolam-propofol-sccm",
+    studyId: "remimazolam-propofol",
     title:
-      "Functional-flow Monitoring for Delirium and Cognitive Outcomes After Adult Cardiac Surgery",
-    authors: "Figueiredo FC, et al",
+      "Remimazolam vs Propofol for Sedation in Mechanically Ventilated ICU Patients: A Meta-Analysis.",
   },
   {
+    id: "vasopressor-sccm",
+    studyId: "vasopressor-fluids",
     title:
-      "Individualized Cerebral Autoregulation-derived Blood-pressure Targets After Acute Brain Injury",
-    authors: "Figueiredo FC, et al",
+      "Early Vasopressor With Fluid Restriction Versus Standard Fluid Resuscitation in Septic Shock.",
+    authors: "Figueiredo FC, et al.",
   },
   {
+    id: "functional-flow-sccm",
+    studyId: "functional-flow",
     title:
-      "Prophylactic Pre-Endoscopic Intubation in Acute Upper GI Bleeding: Systematic Review & Meta-Analysis",
-    authors: "Figueiredo FC, et al",
+      "Functional-flow Monitoring For Delirium and Cognitive Outcomes After Adult Cardiac Surgery.",
+    authors: "Figueiredo FC, et al.",
   },
   {
+    id: "thermodilution-sccm",
+    studyId: "thermodilution",
     title:
-      "Transpulmonary Thermodilution in Septic Shock and ARDS: A Meta-Analysis of Randomized Trials",
-    authors: "Jorqueira ECB, et al",
+      "Transpulmonary Thermodilution in Septic Shock and ARDS: A Meta-Analysis of Randomized Trials.",
+    authors: "Jorqueira ECB, et al.",
   },
   {
+    id: "oxygen-sccm",
+    studyId: "oxygen-titration",
     title:
-      "Automated vs. Manual Oxygen Titration in Critically Ill Patients: A Meta-Analysis of RCTs and TSA",
+      "Automated vs. Manual Oxygen Titration in Critically Ill Patients: A Meta-Analysis of RCTs and TSA.",
     authors:
       "Rangel da Silva Neto M, Jones PNR, Vergna RD, Souza de Moura Ribeiro M, Teles GA, Figueiredo FC",
   },
   {
+    id: "bariatric-sccm",
+    studyId: "bariatric-thromboprophylaxis",
     title:
-      "LMWH versus DOACs for Thromboprophylaxis After Bariatric Surgery: A Meta-Analysis",
+      "LMWH versus DOACs for Thromboprophylaxis After Bariatric Surgery: A Meta-Analysis.",
     authors:
       "Pivetta HB, Costa JVG, Massoud RO, Mendes RG, Alles I, Fonseca LG, Forte DN, Pimenta GP, Figueiredo FC",
   },
 ].map((item) => ({
   ...item,
   year: 2027,
-  venue: "Society of Critical Care Medicine Critical Care Congress",
-  format: "Submitted abstract · decision pending",
+  venue: "SCCM Critical Care Congress",
+  format: "Accepted for presentation",
   status: "published",
 }));
+
+// Retained study; the current selective CV does not resolve its conference submission.
+export const additionalStudies = [
+  {
+    id: "cerebral-autoregulation",
+    title:
+      "Individualized Cerebral Autoregulation-derived Blood-pressure Targets After Acute Brain Injury",
+  },
+];
 
 export const projects: ProjectCaseStudy[] = [
   {
@@ -397,16 +446,14 @@ export const projects: ProjectCaseStudy[] = [
     title: "Clinia",
     stage: "active",
     summary:
-      "An open-source workspace for organizing clinical notes and case logs during medical internship rotations.",
+      "A workspace for organizing clinical notes and case logs during medical internship rotations.",
     problem:
       "Medical students often track cases, notes, and rotation-specific learning across fragmented tools, creating avoidable friction during already demanding clinical placements.",
     direction:
       "Clinia centralizes those workflows in a restrained web application designed around the practical routines of Brazilian medical internship rotations.",
-    role: "Felipe's work spans the clinical workflow, product structure, and software implementation.",
+    role: "My work spans the clinical workflow, product structure, and software implementation.",
     limitation:
       "Educational workflow software. It is not a clinical record system and is not intended to guide patient-care decisions.",
-    highlight:
-      "Approximately 200 users across multiple Brazilian medical schools, as reported in the September 2026 CV.",
     registration: "Brazilian software registration BR512025003190-4",
     url: "https://github.com/felipe2170/Clinia",
     status: "published",
@@ -486,7 +533,7 @@ export const skillGroups = [
     label: "Languages",
     items: [
       "Portuguese — native",
-      "English — Duolingo English Test 145 (July 2026)",
+      "English — C2",
       "French — B1",
       "Spanish — B1",
     ],
@@ -507,4 +554,9 @@ export const publicRoutes = [
   "/blog",
   "/contact",
   "/pt-br",
+  "/pt-br/about",
+  "/pt-br/research",
+  "/pt-br/projects",
+  "/pt-br/cv",
+  "/pt-br/contact",
 ] as const;

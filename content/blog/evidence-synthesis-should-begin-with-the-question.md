@@ -2,6 +2,7 @@
 title: "Evidence synthesis should begin with the question"
 summary: "Why careful question framing matters before searches, statistical models, or polished figures enter an evidence-synthesis project."
 date: "2026-07-25"
+updated: "2026-10-22"
 language: "en"
 status: "published"
 ---
@@ -25,3 +26,8 @@ The method should therefore follow the question and the available evidence—not
 Good synthesis makes uncertainty visible. It distinguishes absence of evidence from evidence of absence, avoids conclusions broader than the included studies, and keeps statistical significance separate from clinical importance.
 
 That restraint is not a weakness. It is part of making research dependable enough to be useful.
+
+## Further reading
+
+- Higgins JPT et al., editors. [Cochrane Handbook for Systematic Reviews of Interventions](https://training.cochrane.org/handbook/current). See question formulation, eligibility criteria, and synthesis methods.
+- [Selected reviews and registrations](/research#selected).

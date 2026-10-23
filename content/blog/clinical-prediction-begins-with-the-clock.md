@@ -2,6 +2,7 @@
 title: "Clinical prediction begins with the clock"
 summary: "Before evaluating a warning model, define when its inputs become available, when a decision is made, and what the warning could change."
 date: "2026-09-30"
+updated: "2026-10-22"
 language: "en"
 status: "published"
 ---
@@ -15,6 +16,10 @@ This is a methodological question in my ongoing work on routine-data hypotension
 Consider a blood-pressure measurement recorded during an ICU admission. The physiological event, the measurement, and the entry into the electronic record can occur at different times. A retrospective dataset may contain a value without showing that it was available to a clinician or a model at the moment we want to reconstruct.
 
 That distinction should influence how the prediction task is defined. A defensible analysis needs an explicit decision time, a rule for which information is available before that time, and an outcome window that begins afterwards. It also needs to state which timestamps the dataset can support and what remains uncertain.
+
+![Synthetic timing example: measured at 09:50, prediction at 10:00, recorded at 10:12. The value is excluded from the prediction because it became available afterwards.](/images/prediction-timing.svg)
+
+For example, a value measured at 09:50 but entered at 10:12 would be unavailable to a prediction made at 10:00. These times are synthetic and illustrate an availability rule, not a result from my study.
 
 ## Observation frequency is part of the clinical setting
 
@@ -31,3 +36,8 @@ Discrimination addresses one part of the problem. A warning also needs a plausib
 Retrospective evaluation can help establish whether a proposed warning deserves further study. It does not demonstrate that using the warning improves care. That requires additional evidence, with the evaluation matched to the claim.
 
 For this work, the immediate task is to make the timing assumptions explicit and examine how much the findings depend on them. A careful definition of the clock is part of defining the clinical question.
+
+## References and related work
+
+- Johnson AEW et al. [MIMIC-IV, a freely accessible electronic health record dataset](https://doi.org/10.1038/s41597-022-01899-x). Scientific Data (2023).
+- [Ongoing primary studies](/research#primary-studies).

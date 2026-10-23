@@ -9,7 +9,8 @@ const mailbox = [
 ];
 const host = [104, 111, 116, 109, 97, 105, 108, 46, 99, 111, 109];
 const address = `${String.fromCharCode(...mailbox)}@${String.fromCharCode(...host)}`;
-export function EmailReveal() {
+export function EmailReveal({ locale = "en" }: { locale?: "en" | "pt-BR" }) {
+  const t = (en: string, pt: string) => (locale === "en" ? en : pt);
   const [revealed, setRevealed] = useState(false);
   const [copyStatus, setCopyStatus] = useState("");
   const emailLink = useRef<HTMLAnchorElement>(null);
@@ -19,9 +20,14 @@ export function EmailReveal() {
   async function copy() {
     try {
       await navigator.clipboard.writeText(address);
-      setCopyStatus("Email address copied.");
+      setCopyStatus(t("Email address copied.", "Endereço de email copiado."));
     } catch {
-      setCopyStatus("Copy unavailable. Select the email address to copy it.");
+      setCopyStatus(
+        t(
+          "Copy unavailable. Select the email address to copy it.",
+          "Cópia indisponível. Selecione o endereço de email para copiá-lo.",
+        ),
+      );
     }
   }
   return (
@@ -37,7 +43,7 @@ export function EmailReveal() {
           </a>
           <br />
           <button type="button" onClick={copy}>
-            Copy email address
+            {t("Copy email address", "Copiar endereço de email")}
           </button>
         </>
       ) : (
@@ -46,13 +52,17 @@ export function EmailReveal() {
           type="button"
           onClick={() => setRevealed(true)}
         >
-          Reveal email address <ArrowIcon direction="diagonal" />
+          {t("Reveal email address", "Mostrar endereço de email")}{" "}
+          <ArrowIcon direction="diagonal" />
         </button>
       )}
       <p role="status">
         {copyStatus ||
           (revealed
-            ? "Use a clear subject line and include relevant context or links."
+            ? t(
+                "Use a clear subject line and include relevant context or links.",
+                "Use um assunto claro e inclua o contexto ou links relevantes.",
+              )
             : "")}
       </p>
     </div>

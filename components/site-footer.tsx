@@ -1,29 +1,33 @@
+import { ArrowIcon } from "@/components/arrow-icon";
 import Link from "next/link";
-import { siteProfile } from "../lib/site";
-
-export function SiteFooter() {
+import { siteProfile } from "@/lib/site";
+import { localizedPath, type Locale } from "@/lib/research";
+export function SiteFooter({ locale = "en" }: { locale?: Locale }) {
+  const pt = locale === "pt-BR";
   return (
     <footer className="site-footer">
       <div className="site-footer__inner">
         <div>
           <p className="site-footer__name">{siteProfile.name}</p>
-          <p className="site-footer__meta">
-            Medical student · {siteProfile.affiliation.shortName}
+          <p>
+            {pt ? "Estudante de medicina · UFMG" : "Medical student · UFMG"}
           </p>
         </div>
-        <nav className="site-footer__links" aria-label="Footer navigation">
-          <Link href="/cv">CV</Link>
-          <Link href="/blog">Blog</Link>
-          <Link href="/pt-br" lang="pt-BR">
-            Em português
+        <nav aria-label={pt ? "Navegação do rodapé" : "Footer navigation"}>
+          <Link href={localizedPath("/cv", locale)}>CV</Link>
+          <Link href={localizedPath("/contact", locale)}>
+            {pt ? "Contato" : "Contact"}
           </Link>
-          <a href={siteProfile.links.linkedin} target="_blank" rel="noreferrer">
-            LinkedIn
+          <a href={siteProfile.links.linkedin}>
+            LinkedIn <ArrowIcon />
           </a>
-          <a href="#top">Back to top ↑</a>
+          <a href="#top">
+            {pt ? "Voltar ao início" : "Back to top"}{" "}
+            <ArrowIcon direction="up" />
+          </a>
         </nav>
         <p className="site-footer__legal">
-          © {new Date().getFullYear()} · {siteProfile.location}
+          © 2026 · Belo Horizonte, {pt ? "Brasil" : "Brazil"}
         </p>
       </div>
     </footer>

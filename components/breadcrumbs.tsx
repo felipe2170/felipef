@@ -31,7 +31,11 @@ export function Breadcrumbs({ items }: { items: Breadcrumb[] }) {
               {item.href && index < allItems.length - 1 ? (
                 <Link href={item.href}>{item.label}</Link>
               ) : (
-                <span aria-current={index === allItems.length - 1 ? "page" : undefined}>
+                <span
+                  aria-current={
+                    index === allItems.length - 1 ? "page" : undefined
+                  }
+                >
                   {item.label}
                 </span>
               )}

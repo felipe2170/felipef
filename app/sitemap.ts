@@ -3,17 +3,28 @@ import { getAllBlogPosts } from "../lib/blog";
 import { publicRoutes, siteProfile } from "../lib/site";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const staticRoutes: MetadataRoute.Sitemap = publicRoutes.map((route, index) => ({
-    url: `${siteProfile.url}${route}`,
-    lastModified: siteProfile.updatedAt,
-    changeFrequency: route === "" ? "monthly" : "yearly",
-    priority: index === 0 ? 1 : route === "/pt-br" ? 0.7 : 0.8,
-  }));
+  const staticRoutes: MetadataRoute.Sitemap = publicRoutes.map(
+    (route, index) => ({
+      url: `${siteProfile.url}${route}`,
+      lastModified: siteProfile.updatedAt,
+      changeFrequency: route === "" ? "monthly" : "yearly",
+      alternates:
+        route === "/blog"
+          ? undefined
+          : {
+              languages: {
+                en: `${siteProfile.url}${route.replace(/^\/pt-br/, "")}`,
+                "pt-BR": `${siteProfile.url}/pt-br${route.replace(/^\/pt-br/, "")}`,
+              },
+            },
+      priority: index === 0 ? 1 : route === "/pt-br" ? 0.7 : 0.8,
+    }),
+  );
 
   const posts = await getAllBlogPosts();
   const blogRoutes: MetadataRoute.Sitemap = posts.map((post) => ({
     url: `${siteProfile.url}/blog/${post.slug}`,
-    lastModified: post.date,
+    lastModified: post.updated ?? post.date,
     changeFrequency: "yearly",
     priority: 0.6,
   }));
